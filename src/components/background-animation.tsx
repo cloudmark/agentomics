@@ -274,7 +274,7 @@ export function BackgroundAnimation() {
   return (
     <div
       ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full -z-10 filter opacity-90 blur-[2px]"
+      className="absolute top-0 left-0 w-full h-full -z-10"
     />
   );
 }
