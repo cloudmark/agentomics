@@ -66,6 +66,46 @@
     @apply border-border;
     font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
   }
+  
+  /* Exception for asciinema player to use monospace fonts */
+  asciinema-player,
+  asciinema-player *,
+  .asciinema-terminal,
+  .asciinema-terminal *,
+  .ap-wrapper,
+  .ap-wrapper * {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Courier New', monospace !important;
+  }
+
+  /* Asciinema player font size */
+  asciinema-player .ap-terminal,
+  asciinema-player pre,
+  .ap-terminal,
+  .ap-terminal pre {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  @media (min-width: 768px) {
+    asciinema-player .ap-terminal,
+    asciinema-player pre,
+    .ap-terminal,
+    .ap-terminal pre {
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    asciinema-player .ap-terminal,
+    asciinema-player pre,
+    .ap-terminal,
+    .ap-terminal pre {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+    }
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
@@ -88,11 +128,88 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 200ms;
   }
+
+  /* Fullscreen styles for terminal */
+  :fullscreen {
+    height: 100vh !important;
+    width: 100vw !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: black !important;
+  }
+
+  :-webkit-full-screen {
+    height: 100vh !important;
+    width: 100vw !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: black !important;
+  }
+
+  :-moz-full-screen {
+    height: 100vh !important;
+    width: 100vw !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: black !important;
+  }
+
+  :-ms-fullscreen {
+    height: 100vh !important;
+    width: 100vw !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: black !important;
+  }
 }
 
 @layer utilities {
   .mix-blend-darken {
     mix-blend-mode: darken;
+  }
+
+  /* Individual chevron moving up animations */
+  @keyframes chevron-move-1 {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes chevron-move-2 {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes chevron-move-3 {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  .animate-chevron-1 {
+    animation: chevron-move-1 1.5s ease-in-out infinite;
+  }
+
+  .animate-chevron-2 {
+    animation: chevron-move-2 1.5s ease-in-out infinite 0.2s;
+  }
+
+  .animate-chevron-3 {
+    animation: chevron-move-3 1.5s ease-in-out infinite 0.4s;
   }
 }
 

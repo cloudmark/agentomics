@@ -333,13 +333,60 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-full">
-                <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20">
-                  <div className="bg-muted/50 px-4 py-2 flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <AsciinemaPlayer src="/get_started.cast" className="w-full" />
+                <div
+                  id="terminal-get-started"
+                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
+                  onClick={(e) => {
+                    const container = document.getElementById(
+                      "terminal-get-started"
+                    );
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
+                  <AsciinemaPlayer
+                    src="/get_started.cast"
+                    className="w-full"
+                    zoom={2.5}
+                  />
+                </div>
+                <div
+                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  onClick={() => {
+                    const container = document.getElementById(
+                      "terminal-get-started"
+                    );
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
+                  <svg
+                    width="48"
+                    height="12"
+                    viewBox="0 0 48 12"
+                    className="text-primary"
+                  >
+                    <path
+                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-1"
+                    />
+                    <path
+                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-2"
+                    />
+                    <path
+                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-3"
+                    />
+                  </svg>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Click to expand
+                  </span>
                 </div>
               </div>
             </div>
@@ -428,16 +475,60 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-full">
-                <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20">
-                  <div className="bg-muted/50 px-4 py-2 flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  </div>
+                <div
+                  id="terminal-breast-cancer"
+                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
+                  onClick={(e) => {
+                    const container = document.getElementById(
+                      "terminal-breast-cancer"
+                    );
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
                   <AsciinemaPlayer
                     src="/breast_cancer.cast"
                     className="w-full"
+                    zoom={2.5}
                   />
+                </div>
+                <div
+                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  onClick={() => {
+                    const container = document.getElementById(
+                      "terminal-breast-cancer"
+                    );
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
+                  <svg
+                    width="48"
+                    height="12"
+                    viewBox="0 0 48 12"
+                    className="text-primary"
+                  >
+                    <path
+                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-1"
+                    />
+                    <path
+                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-2"
+                    />
+                    <path
+                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-3"
+                    />
+                  </svg>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Click to expand
+                  </span>
                 </div>
               </div>
             </div>
@@ -461,13 +552,56 @@ export default function Home() {
             </div>
             <div className="mt-12 grid gap-12 lg:grid-cols-2">
               <div className="w-full">
-                <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20">
-                  <div className="bg-muted/50 px-4 py-2 flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                    <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <AsciinemaPlayer src="/infer.cast" className="w-full" />
+                <div
+                  id="terminal-infer"
+                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
+                  onClick={(e) => {
+                    const container = document.getElementById("terminal-infer");
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
+                  <AsciinemaPlayer
+                    src="/infer.cast"
+                    className="w-full"
+                    zoom={2.5}
+                  />
+                </div>
+                <div
+                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  onClick={() => {
+                    const container = document.getElementById("terminal-infer");
+                    if (container) {
+                      container.requestFullscreen?.();
+                    }
+                  }}
+                >
+                  <svg
+                    width="48"
+                    height="12"
+                    viewBox="0 0 48 12"
+                    className="text-primary"
+                  >
+                    <path
+                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-1"
+                    />
+                    <path
+                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-2"
+                    />
+                    <path
+                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
+                      fill="currentColor"
+                      className="animate-chevron-3"
+                    />
+                  </svg>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Click to expand
+                  </span>
                 </div>
               </div>
               <div className="space-y-8">
