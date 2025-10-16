@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/table";
 import { PerformanceDashboard } from "@/components/performance-dashboard";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { TeamSection } from "@/components/team-section";
 
 const coreComponents = [
   {
@@ -58,7 +59,7 @@ const coreComponents = [
     icon: <FunctionSquare className="h-8 w-8 text-primary" />,
     title: "Functional Models",
     description:
-      "Agentomics-ML outputs fully functional, trainable models and inference scripts, ready for your data pipeline.",
+      "Agentomics outputs fully functional, trainable models and inference scripts, ready for your data pipeline.",
   },
   {
     icon: <Sparkles className="h-8 w-8 text-primary" />,
@@ -95,9 +96,7 @@ export default function Home() {
             href="#"
             className="mr-6 flex items-center space-x-2 transition-opacity hover:opacity-80"
           >
-            <span className="font-bold text-lg tracking-tight">
-              Agentomics-ML
-            </span>
+            <span className="font-bold text-lg tracking-tight">Agentomics</span>
           </a>
           <nav className="hidden items-center space-x-8 text-sm font-medium lg:flex">
             <a
@@ -147,7 +146,7 @@ export default function Home() {
             <ThemeToggle />
             <Button asChild>
               <a
-                href="https://github.com/BioGeMT/Agentomics-ML"
+                href="https://github.com/BioGeMT/Agentomics"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -167,7 +166,7 @@ export default function Home() {
           <div className="container mx-auto flex flex-col items-center px-4 text-center">
             <div className="relative w-full flex items-center justify-center">
               <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-center">
-                <span className="blur-to-focus-text">Agentomics-ML</span>
+                <span className="blur-to-focus-text">Agentomics</span>
               </h1>
             </div>
 
@@ -200,7 +199,7 @@ export default function Home() {
                 The future of model generation.
               </h2>
               <p className="mt-4 text-muted-foreground md:text-2xl">
-                Agentomics-ML simplifies development by automating the entire
+                Agentomics simplifies development by automating the entire
                 pipeline, allowing you to focus on the results, not the
                 boilerplate.
               </p>
@@ -217,12 +216,14 @@ export default function Home() {
               {coreComponents.map((component) => (
                 <Card
                   key={component.title}
-                  className="group relative overflow-hidden border border-primary/20 bg-card/90 text-center shadow-lg shadow-primary/10 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/20 supports-[backdrop-filter]:bg-card/70 backdrop-blur-md backdrop-saturate-150"
+                  className="group relative overflow-hidden border border-primary/20 bg-card/90 text-center shadow-lg shadow-primary/10 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20 supports-[backdrop-filter]:bg-card/70 backdrop-blur-md backdrop-saturate-150"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                   <CardHeader className="relative items-center pb-4">
-                    <div className="mb-4 transform transition-transform duration-300 group-hover:scale-110">
-                      {component.icon}
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 transition-all duration-300 group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30">
+                      <div className="transform transition-transform duration-300 group-hover:scale-110">
+                        {component.icon}
+                      </div>
                     </div>
                     <CardTitle className="text-xl font-bold tracking-tight">
                       {component.title}
@@ -288,7 +289,7 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-muted-foreground md:text-2xl">
                 Clone the repository and run the setup script. That's all it
-                takes to start building models with Agentomics-ML.
+                takes to start building models with Agentomics.
               </p>
             </div>
             <div className="mt-12 grid gap-12 lg:grid-cols-2">
@@ -298,7 +299,7 @@ export default function Home() {
                     One-Command Setup
                   </h3>
                   <p className="mt-4 text-lg text-muted-foreground">
-                    This terminal recording shows you how to get Agentomics-ML
+                    This terminal recording shows you how to get Agentomics
                     running on your local machine with just two commands. It's
                     fast, simple, and ready to go.
                   </p>
@@ -355,9 +356,9 @@ export default function Home() {
                 See How Easy It Is to Train a Model
               </h2>
               <p className="mt-4 text-muted-foreground md:text-2xl">
-                Watch the Agentomics-ML agent train a breast cancer
-                classification model from scratch. We've included the dataset in
-                the project, so you can follow along and run it yourself.
+                Watch the Agentomics agent train a breast cancer classification
+                model from scratch. We've included the dataset in the project,
+                so you can follow along and run it yourself.
               </p>
             </div>
             <div className="mt-12 grid gap-12 lg:grid-cols-2">
@@ -422,7 +423,7 @@ export default function Home() {
                     validation set, meaning it correctly identified every
                     malignant tumor without any false positives. This
                     demonstrates the power and reliability of the models
-                    generated by Agentomics-ML.
+                    generated by Agentomics.
                   </p>
                 </div>
               </div>
@@ -547,11 +548,11 @@ export default function Home() {
           <div className="container mx-auto space-y-12 px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                How Agentomics-ML Compares
+                How Agentomics Compares
               </h2>
               <p className="mt-4 text-muted-foreground md:text-2xl">
-                Agentomics-ML consistently outperforms other AI-based methods
-                and even surpasses human-level performance on complex biological
+                Agentomics consistently outperforms other AI-based methods and
+                even surpasses human-level performance on complex biological
                 datasets. The data below shows a clear advantage in both code
                 generation success and model performance.
               </p>
@@ -567,7 +568,7 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground">
                   While traditional AutoML systems excel at optimizing standard
                   models, they often fall short on the complex, domain-specific
-                  datasets found in computational biology. Agentomics-ML is
+                  datasets found in computational biology. Agentomics is
                   engineered to overcome these limitations. By leveraging a
                   generative AI agent, it can design novel and intricate model
                   architectures tailored to these unique challenges, providing a
@@ -578,6 +579,8 @@ export default function Home() {
             </Card>
           </div>
         </section>
+
+        <TeamSection />
       </main>
 
       <footer className="z-10 border-t border-border/40">
@@ -585,7 +588,7 @@ export default function Home() {
           <Copyright />
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/BioGeMT/Agentomics-ML"
+              href="https://github.com/BioGeMT/Agentomics"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"

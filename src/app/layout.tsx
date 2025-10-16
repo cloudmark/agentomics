@@ -3,6 +3,21 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ClientBackground } from "@/components/client-background";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Outfit, Space_Grotesk } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Agentomics - Generative AI Framework for ML Models",
@@ -100,7 +115,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,700&family=Source+Code+Pro:wght@500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -110,7 +125,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Agentomics" />
       </head>
-      <body className="font-sans antialiased" suppressHydrationWarning>
+      <body
+        className={`${outfit.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

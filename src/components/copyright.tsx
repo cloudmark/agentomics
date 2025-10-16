@@ -1,7 +1,6 @@
+"use client";
 
-'use client';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export function Copyright() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -12,7 +11,7 @@ export function Copyright() {
 
   return (
     <div className="text-sm text-muted-foreground">
-      &copy; {year} Agentomics-ML. All rights reserved.
+      &copy; {year} Agentomics. All rights reserved.
     </div>
   );
 }

@@ -51,7 +51,7 @@ export function DatasetChart({ data, unit = "" }: DatasetChartProps) {
             ? "hsl(0, 60%, 45%)" // Subtle red for Human SOTA
             : isWinner
             ? "hsl(160, 50%, 45%)" // Subtle teal for winners
-            : d.name.startsWith("Agentomics-ML")
+            : d.name.startsWith("Agentomics")
             ? "hsl(var(--primary))"
             : `hsl(var(--chart-${(index % 5) + 1}))`;
       } else {

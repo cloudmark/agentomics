@@ -4,132 +4,21 @@ import React, { useRef, useEffect } from "react";
 import { useTheme } from "next-themes";
 import p5 from "p5";
 
-class Node {
-  p: p5;
-  pos: p5.Vector;
-  vel: p5.Vector;
-  target: p5.Vector;
-  noiseOffset: p5.Vector;
-  glow: number = 0;
-  id: number;
-
-  constructor(p: p5, id: number) {
-    this.p = p;
-    this.id = id;
-    this.pos = p.createVector(p.random(p.width), p.random(p.height));
-    this.vel = p.createVector();
-    this.target = this.pos.copy();
-    this.noiseOffset = p.createVector(p.random(1000), p.random(1000));
-  }
-
-  update(mouse: p5.Vector) {
-    // Gentle drift
-    const noiseX = this.p.noise(this.noiseOffset.x + this.p.frameCount * 0.001);
-    const noiseY = this.p.noise(this.noiseOffset.y + this.p.frameCount * 0.001);
-    this.target.add(
-      this.p.createVector(
-        this.p.map(noiseX, 0, 1, -0.5, 0.5),
-        this.p.map(noiseY, 0, 1, -0.5, 0.5)
-      )
-    );
-
-    // Move towards target
-    const toTarget = p5.Vector.sub(this.target, this.pos);
-    toTarget.mult(0.01);
-    this.vel.add(toTarget);
-
-    // Mouse interaction - Repel
-    const d = this.p.dist(this.pos.x, this.pos.y, mouse.x, mouse.y);
-    if (d < 150) {
-      const repel = p5.Vector.sub(this.pos, mouse);
-      const strength = this.p.map(d, 0, 150, 5, 0); // Inverse strength
-      repel.setMag(strength);
-      this.vel.add(repel);
-    }
-
-    this.vel.limit(4); // Limit velocity to prevent extreme speeds
-    this.pos.add(this.vel);
-    this.vel.mult(0.95); // Add friction
-
-    // Slowly fade glow from pulses
-    this.glow = this.p.lerp(this.glow, 0, 0.05);
-
-    // Edges
-    if (
-      this.pos.x < 0 ||
-      this.pos.x > this.p.width ||
-      this.pos.y < 0 ||
-      this.pos.y > this.p.height
-    ) {
-      this.pos = this.p.createVector(
-        this.p.random(this.p.width),
-        this.p.random(this.p.height)
-      );
-      this.target = this.pos.copy();
-    }
-  }
-
-  setGlow(value: number) {
-    this.glow = Math.max(this.glow, value);
-  }
-
-  show(baseColor: p5.Color) {
-    this.p.noStroke();
-    const finalColor = this.p.lerpColor(
-      this.p.color(0, 0),
-      baseColor,
-      this.glow
-    );
-    this.p.fill(finalColor);
-    this.p.circle(this.pos.x, this.pos.y, 4);
-
-    // Core glow
-    this.p.fill(baseColor);
-    this.p.circle(this.pos.x, this.pos.y, 2);
-  }
+interface GridNode {
+  x: number;
+  y: number;
+  col: number;
+  row: number;
+  activation: number;
 }
 
-class FiringPulse {
-  p: p5;
-  origin: Node;
-  target: Node;
-  progress: number;
+interface Wave {
+  centerCol: number;
+  centerRow: number;
+  radius: number;
+  maxRadius: number;
   speed: number;
-
-  constructor(p: p5, origin: Node, target: Node) {
-    this.p = p;
-    this.origin = origin;
-    this.target = target;
-    this.progress = 0;
-    this.speed = p.random(0.02, 0.05);
-  }
-
-  update() {
-    this.progress += this.speed;
-    if (this.progress >= 1) {
-      this.target.setGlow(1);
-    }
-  }
-
-  isDone() {
-    return this.progress >= 1;
-  }
-
-  show(color: p5.Color) {
-    if (this.isDone()) return;
-    const currentPos = p5.Vector.lerp(
-      this.origin.pos,
-      this.target.pos,
-      this.progress
-    );
-    this.p.noStroke();
-
-    const glow = Math.sin(this.progress * this.p.PI) * 1;
-    const c = this.p.lerpColor(this.p.color(0, 0), color, glow);
-
-    this.p.fill(c);
-    this.p.circle(currentPos.x, currentPos.y, 4);
-  }
+  useComplementary: boolean; // Flag to use complementary color
 }
 
 export function BackgroundAnimation() {
@@ -141,10 +30,18 @@ export function BackgroundAnimation() {
     if (typeof window === "undefined" || !canvasRef.current) return;
 
     const sketch = (p: p5) => {
-      let nodes: Node[] = [];
-      let pulses: FiringPulse[] = [];
-      const numNodes = p.windowWidth > 768 ? 250 : 125;
-      let needsColorUpdate = true;
+      let primaryColor: p5.Color;
+      let complementaryColor: p5.Color;
+      let backgroundColor: p5.Color;
+      let spacing = 60;
+      let cols = 0;
+      let rows = 0;
+      let grid: GridNode[][] = [];
+      let waves: Wave[] = [];
+      let lastWaveTime = 0;
+      let lastMouseWaveCol = -1;
+      let lastMouseWaveRow = -1;
+      let mouseWaveActive = false;
 
       const getCurrentThemeColors = () => {
         const computedStyle = getComputedStyle(document.documentElement);
@@ -160,93 +57,354 @@ export function BackgroundAnimation() {
         const [bgH, bgS, bgL] = bgColorStr.split(" ").map(parseFloat);
 
         p.colorMode(p.HSL, 360, 100, 100, 1);
-        return {
-          primary: p.color(h, s, l, 0.6),
-          background: p.color(bgH, bgS, bgL),
-        };
+
+        // Check if dark mode (low lightness background)
+        const isDark = bgL < 50;
+
+        // Adjust colors for better visibility in dark mode
+        if (isDark) {
+          primaryColor = p.color(
+            h || 262,
+            (s || 88) * 1.2,
+            Math.min((l || 66) * 1.5, 85)
+          );
+          const compH = (h + 180) % 360;
+          complementaryColor = p.color(
+            compH,
+            (s || 88) * 1.1,
+            Math.min((l || 66) * 1.5, 85)
+          );
+        } else {
+          primaryColor = p.color(h || 262, s || 88, l || 66);
+          const compH = (h + 180) % 360;
+          complementaryColor = p.color(compH, (s || 88) * 0.8, (l || 66) * 1.1);
+        }
+
+        backgroundColor = p.color(bgH || 0, bgS || 0, bgL || 96);
       };
 
-      // Add a global function to trigger color update
-      (p as any).updateThemeColors = () => {
-        needsColorUpdate = true;
+      const createGrid = () => {
+        grid = [];
+        spacing = p.windowWidth > 768 ? 30 : 40;
+
+        cols = p.floor(p.width / spacing) + 1;
+        rows = p.floor(p.height / spacing) + 1;
+
+        for (let col = 0; col < cols; col++) {
+          grid[col] = [];
+          for (let row = 0; row < rows; row++) {
+            grid[col][row] = {
+              x: col * spacing,
+              y: row * spacing,
+              col,
+              row,
+              activation: 0,
+            };
+          }
+        }
       };
 
       p.setup = () => {
         p.createCanvas(p.windowWidth, p.windowHeight).parent(
           canvasRef.current!
         );
-
-        for (let i = 0; i < numNodes; i++) {
-          nodes.push(new Node(p, i));
-        }
+        getCurrentThemeColors();
+        createGrid();
+        p.frameRate(30);
       };
 
       p.draw = () => {
-        // Get current theme colors every frame or when needed
-        const colors = getCurrentThemeColors();
+        getCurrentThemeColors();
+        p.background(backgroundColor);
 
-        p.background(colors.background, 0.2);
-        const mouse = p.createVector(p.mouseX, p.mouseY);
+        // Create new waves periodically - double pulsation with alternating colors
+        if (p.millis() - lastWaveTime > 3000) {
+          const centerCol = p.floor(p.random(cols));
+          const centerRow = p.floor(p.random(rows));
+          const useComp = p.random() > 0.5; // Randomly choose color
 
-        // Draw connections
-        p.stroke(colors.primary);
-        p.strokeWeight(0.5);
-        for (let i = 0; i < nodes.length; i++) {
-          for (let j = i + 1; j < nodes.length; j++) {
-            const d = p.dist(
-              nodes[i].pos.x,
-              nodes[i].pos.y,
-              nodes[j].pos.x,
-              nodes[j].pos.y
+          // Create two waves from the same point - one primary, one complementary
+          waves.push({
+            centerCol,
+            centerRow,
+            radius: 0,
+            maxRadius: p.random(20, 35),
+            speed: 0.15,
+            useComplementary: useComp,
+          });
+
+          // Second wave with slight delay - opposite color
+          waves.push({
+            centerCol,
+            centerRow,
+            radius: -3, // Start slightly behind
+            maxRadius: p.random(20, 35),
+            speed: 0.15,
+            useComplementary: !useComp, // Opposite color
+          });
+
+          lastWaveTime = p.millis();
+        }
+
+        // Update waves
+        waves.forEach((wave) => {
+          wave.radius += wave.speed;
+        });
+
+        // Remove completed waves
+        waves = waves.filter((wave) => wave.radius < wave.maxRadius + 2);
+
+        // Decay all activations
+        for (let col = 0; col < cols; col++) {
+          for (let row = 0; row < rows; row++) {
+            grid[col][row].activation *= 0.9;
+          }
+        }
+
+        // Mouse interaction - create waves on mouse movement
+        if (
+          p.mouseX > 0 &&
+          p.mouseX < p.width &&
+          p.mouseY > 0 &&
+          p.mouseY < p.height
+        ) {
+          const mouseCol = p.floor(p.mouseX / spacing);
+          const mouseRow = p.floor(p.mouseY / spacing);
+
+          // Only create wave if mouse moved to a new grid cell or previous wave finished
+          if (
+            (!mouseWaveActive ||
+              mouseCol !== lastMouseWaveCol ||
+              mouseRow !== lastMouseWaveRow) &&
+            p.frameCount % 10 === 0
+          ) {
+            waves.push({
+              centerCol: mouseCol,
+              centerRow: mouseRow,
+              radius: 0,
+              maxRadius: p.random(8, 12),
+              speed: 0.25,
+              useComplementary: p.random() > 0.5,
+            });
+            lastMouseWaveCol = mouseCol;
+            lastMouseWaveRow = mouseRow;
+            mouseWaveActive = true;
+          }
+
+          // Check if mouse wave finished
+          if (mouseWaveActive) {
+            const hasActiveMouseWave = waves.some(
+              (w) =>
+                w.centerCol === lastMouseWaveCol &&
+                w.centerRow === lastMouseWaveRow &&
+                w.maxRadius < 13 // Mouse waves have maxRadius 8-12
             );
-            if (d < 120) {
-              p.line(
-                nodes[i].pos.x,
-                nodes[i].pos.y,
-                nodes[j].pos.x,
-                nodes[j].pos.y
-              );
+            if (!hasActiveMouseWave) {
+              mouseWaveActive = false;
+            }
+          }
+
+          // Directly activate nearby nodes
+          for (let col = 0; col < cols; col++) {
+            for (let row = 0; row < rows; row++) {
+              const node = grid[col][row];
+              const d = p.dist(p.mouseX, p.mouseY, node.x, node.y);
+
+              if (d < 100) {
+                const influence = p.map(d, 0, 100, 0.6, 0, true);
+                node.activation = Math.max(node.activation, influence);
+              }
             }
           }
         }
 
-        nodes.forEach((node) => {
-          node.update(mouse);
-          node.show(colors.primary);
+        // Apply wave activations with lifecycle fade and color assignment
+        waves.forEach((wave) => {
+          // Calculate wave lifecycle (0 = start, 1 = end)
+          const lifecycle = wave.radius / wave.maxRadius;
+
+          // Fade in for first 20%, stay strong until 60%, then fade out
+          let lifecycleFade;
+          if (lifecycle < 0.2) {
+            lifecycleFade = lifecycle / 0.2; // Fade in
+          } else if (lifecycle < 0.6) {
+            lifecycleFade = 1; // Full strength
+          } else {
+            lifecycleFade = 1 - (lifecycle - 0.6) / 0.4; // Fade out
+          }
+
+          for (let col = 0; col < cols; col++) {
+            for (let row = 0; row < rows; row++) {
+              const dist = p.dist(col, row, wave.centerCol, wave.centerRow);
+
+              // Check if node is on the wave front
+              if (Math.abs(dist - wave.radius) < 1.5) {
+                const proximity = 1 - Math.abs(dist - wave.radius) / 1.5;
+                const activation = proximity * lifecycleFade;
+
+                // Store activation with color info
+                if (activation > grid[col][row].activation) {
+                  grid[col][row].activation = activation;
+                  // Store which color this node should use (0 = primary, 1 = complementary)
+                  (grid[col][row] as any).colorMix = wave.useComplementary
+                    ? 1
+                    : 0;
+                }
+              }
+            }
+          }
         });
 
-        pulses.forEach((pulse) => {
-          pulse.update();
-          pulse.show(colors.primary);
-        });
+        // Check if dark mode once for all lines
+        const computedStyle = getComputedStyle(document.documentElement);
+        const bgColorStr = computedStyle
+          .getPropertyValue("--background")
+          .trim();
+        const [, , bgL] = bgColorStr.split(" ").map(parseFloat);
+        const isDark = bgL < 50;
 
-        pulses = pulses.filter((p) => !p.isDone());
+        // Draw horizontal lines
+        p.strokeWeight(0.5);
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols - 1; col++) {
+            const node1 = grid[col][row];
+            const node2 = grid[col + 1][row];
 
-        if (p.frameCount % 10 === 0 && pulses.length < nodes.length) {
-          const startNode = p.random(nodes);
-          const potentialTargets = nodes.filter(
-            (n) =>
-              n.id !== startNode.id &&
-              p.dist(startNode.pos.x, startNode.pos.y, n.pos.x, n.pos.y) < 150
-          );
-          if (potentialTargets.length > 0) {
-            const targetNode = p.random(potentialTargets);
-            pulses.push(new FiringPulse(p, startNode, targetNode));
-            startNode.setGlow(1);
+            const avgActivation = (node1.activation + node2.activation) / 2;
+            const lineAlpha =
+              avgActivation > 0.1
+                ? p.map(
+                    avgActivation,
+                    0,
+                    1,
+                    isDark ? 0.08 : 0.04,
+                    isDark ? 0.4 : 0.25
+                  )
+                : isDark
+                ? 0.08
+                : 0.04;
+
+            // Use the color assigned by the wave
+            const colorMix1 = (node1 as any).colorMix || 0;
+            const colorMix2 = (node2 as any).colorMix || 0;
+            const avgColorMix = (colorMix1 + colorMix2) / 2;
+
+            const lineColor =
+              avgActivation > 0.1
+                ? p.lerpColor(primaryColor, complementaryColor, avgColorMix)
+                : p.color(primaryColor);
+            lineColor.setAlpha(lineAlpha);
+            p.stroke(lineColor);
+
+            if (avgActivation > 0.1) {
+              p.strokeWeight(0.8 + avgActivation * 0.5);
+            } else {
+              p.strokeWeight(0.5);
+            }
+
+            p.line(node1.x, node1.y, node2.x, node2.y);
+          }
+        }
+
+        // Draw vertical lines
+        for (let col = 0; col < cols; col++) {
+          for (let row = 0; row < rows - 1; row++) {
+            const node1 = grid[col][row];
+            const node2 = grid[col][row + 1];
+
+            const avgActivation = (node1.activation + node2.activation) / 2;
+            const lineAlpha =
+              avgActivation > 0.1
+                ? p.map(
+                    avgActivation,
+                    0,
+                    1,
+                    isDark ? 0.08 : 0.04,
+                    isDark ? 0.4 : 0.25
+                  )
+                : isDark
+                ? 0.08
+                : 0.04;
+
+            // Use the color assigned by the wave
+            const colorMix1 = (node1 as any).colorMix || 0;
+            const colorMix2 = (node2 as any).colorMix || 0;
+            const avgColorMix = (colorMix1 + colorMix2) / 2;
+
+            const lineColor =
+              avgActivation > 0.1
+                ? p.lerpColor(primaryColor, complementaryColor, avgColorMix)
+                : p.color(primaryColor);
+            lineColor.setAlpha(lineAlpha);
+            p.stroke(lineColor);
+
+            if (avgActivation > 0.1) {
+              p.strokeWeight(0.8 + avgActivation * 0.5);
+            } else {
+              p.strokeWeight(0.5);
+            }
+
+            p.line(node1.x, node1.y, node2.x, node2.y);
+          }
+        }
+
+        p.noStroke();
+
+        // Draw dots
+        for (let col = 0; col < cols; col++) {
+          for (let row = 0; row < rows; row++) {
+            const node = grid[col][row];
+
+            // Check if dark mode for stronger opacity
+            const computedStyle = getComputedStyle(document.documentElement);
+            const bgColorStr = computedStyle
+              .getPropertyValue("--background")
+              .trim();
+            const [bgH, bgS, bgL] = bgColorStr.split(" ").map(parseFloat);
+            const isDark = bgL < 50;
+
+            let size = 1.5;
+            let alpha = isDark ? 0.15 : 0.08;
+
+            if (node.activation > 0.1) {
+              size = 1.5 + node.activation * 3;
+              alpha = isDark
+                ? 0.2 + node.activation * 0.7
+                : 0.1 + node.activation * 0.5;
+
+              // Subtle glow on active nodes
+              if (node.activation > 0.5) {
+                const colorMix = (node as any).colorMix || 0;
+                const glowColor = p.lerpColor(
+                  primaryColor,
+                  complementaryColor,
+                  colorMix
+                );
+                glowColor.setAlpha(
+                  isDark ? node.activation * 0.25 : node.activation * 0.15
+                );
+                p.fill(glowColor);
+                p.circle(node.x, node.y, size + 6);
+              }
+            }
+
+            // Use the color assigned by the wave
+            const colorMix = (node as any).colorMix || 0;
+            const dotColor =
+              node.activation > 0.1
+                ? p.lerpColor(primaryColor, complementaryColor, colorMix)
+                : p.color(primaryColor);
+            dotColor.setAlpha(alpha);
+            p.fill(dotColor);
+            p.circle(node.x, node.y, size);
           }
         }
       };
 
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
-        nodes = [];
-        pulses = [];
-        const newNumNodes = p.windowWidth > 768 ? 250 : 125;
-        for (let i = 0; i < newNumNodes; i++) {
-          nodes.push(new Node(p, i));
-        }
-        const colors = getCurrentThemeColors();
-        p.background(colors.background);
+        getCurrentThemeColors();
+        createGrid();
       };
     };
 
@@ -258,23 +416,22 @@ export function BackgroundAnimation() {
         p5InstanceRef.current = null;
       }
     };
-  }, []); // Remove resolvedTheme dependency to prevent recreation
+  }, []);
 
-  // Separate effect to handle theme changes
   useEffect(() => {
     if (p5InstanceRef.current && resolvedTheme) {
-      const p = p5InstanceRef.current;
-      // Call the updateThemeColors function we added to the p5 instance
-      if ((p as any).updateThemeColors) {
-        (p as any).updateThemeColors();
-      }
+      // Theme change triggers redraw
     }
   }, [resolvedTheme]);
 
   return (
-    <div
-      ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full -z-10"
-    />
+    <>
+      <div
+        ref={canvasRef}
+        className="absolute top-0 left-0 w-full h-full -z-10"
+        style={{ filter: "blur(1px)" }}
+      />
+      <div className="absolute top-0 left-0 w-full h-full -z-10 bg-background/50 backdrop-blur-[4px]" />
+    </>
   );
 }
