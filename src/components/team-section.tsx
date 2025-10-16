@@ -20,7 +20,7 @@ const team: TeamMember[] = [
     initials: "PA",
   },
   {
-    name: "Vlastimil Martinek",
+    name: "Dr. Vlastimil Martinek",
     role: "Research Scientist",
     bio: "Research scientist with experience in deep learning and computational biology research. Developed benchmarks and state-of-the-art deep learning models for genomics and transcriptomics.",
     imageSrc: "/avatars/vlasta.jpg",
