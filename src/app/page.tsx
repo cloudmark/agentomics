@@ -146,7 +146,7 @@ export default function Home() {
             <ThemeToggle />
             <Button asChild>
               <a
-                href="https://github.com/BioGeMT/Agentomics"
+                href="https://github.com/BioGeMT/Agentomics-ML"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -250,8 +250,8 @@ export default function Home() {
                 How It Works
               </h2>
               <p className="mt-4 text-muted-foreground md:text-2xl">
-                The agent follows a simple, three-step process to generate a
-                production-ready model.
+                The agent generates a production-ready model by following a ML
+                pipeline including the following steps.
               </p>
             </div>
             <div className="mx-auto max-w-2xl space-y-8">
@@ -722,7 +722,7 @@ export default function Home() {
           <Copyright />
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/BioGeMT/Agentomics"
+              href="https://github.com/BioGeMT/Agentomics-ML"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
