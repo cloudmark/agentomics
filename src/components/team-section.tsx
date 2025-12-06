@@ -61,6 +61,13 @@ const team: TeamMember[] = [
     imageSrc: "/avatars/edward.jpg",
     initials: "EB",
   },
+  {
+    name: "Eng. Alessandro Balestrucci",
+    role: "Research Scientist, ICT Engineer",
+    bio: "Expert in the full Knowledge Discovery process and AI technologies, pioneering novel methodologies from a research perspective to architect advanced AI solutions for cross-disciplinary research challenges.",
+    imageSrc: "/avatars/alessandro.png",
+    initials: "AB",
+  },
 ];
 
 export function TeamSection() {
