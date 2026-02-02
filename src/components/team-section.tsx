@@ -68,6 +68,13 @@ const team: TeamMember[] = [
     imageSrc: "/avatars/alessandro.png",
     initials: "AB",
   },
+  {
+    name: "Dr. Elissavet Zacharopoulou",
+    role: "Postdoctoral Researcher",
+    bio: "Postdoctoral researcher with research interests in computational biology, machine learning, and data-driven analysis of molecular biology data.",
+    imageSrc: "/avatars/elissavet.jpg",
+    initials: "EZ",
+  },
 ];
 
 export function TeamSection() {
