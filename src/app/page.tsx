@@ -151,10 +151,6 @@ export default function Home() {
                   Read the Paper <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
                 </a>
               </Button>
-              <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground border-l border-border/40 pl-4">
-                <a href="https://github.com/BioGeMT/Agentomics-ML" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub ↗</a>
-                <a href="https://www.biorxiv.org/content/10.64898/2026.01.27.702049v1" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">bioRxiv ↗</a>
-              </div>
             </div>
 
           </div>
