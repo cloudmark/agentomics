@@ -116,7 +116,7 @@ export default function Home() {
               <span className="blur-to-focus-text">Agentomics</span>
             </h1>
 
-            <p className="text-[clamp(1.15rem,2.4vw,2.1rem)] text-muted-foreground leading-snug mb-4 font-sans font-light max-w-[18ch]">
+            <p className="text-[clamp(1.15rem,2.4vw,2.1rem)] text-muted-foreground leading-snug mb-4 font-sans font-light whitespace-nowrap">
               Autonomous end-to-end ML experimentation for biomedical data.
             </p>
             <p className="text-muted-foreground max-w-xl leading-relaxed mb-8 font-sans">
