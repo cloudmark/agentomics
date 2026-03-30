@@ -179,7 +179,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <p className="font-mono text-base text-muted-foreground mt-5">
+              <p className="font-mono text-base text-muted-foreground mt-5 whitespace-nowrap">
                 Iterative: after each run the Experiment Design LLM reads the full summary and generates the next strategy.
               </p>
             </div>
