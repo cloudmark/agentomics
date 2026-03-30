@@ -4,13 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DatasetChart } from "./dataset-chart";
-import { ArrowRight, Database } from "lucide-react";
+import { Database } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -19,294 +18,239 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+// Data from Table 2 of the Agentomics paper (Regulatory Genomics domain)
+// Metric values multiplied ×100 for chart display
 const datasets = [
   {
-    name: "AGO2_CLASH_Hejret",
-    displayName: "RNA Molecule Interaction Prediction",
+    name: "AGO2_CLASH_Hejret2023",
+    displayName: "miRNA–Target Interaction",
     code: "AGO2",
-    sourceName: "miRBench Package",
+    sourceName: "miRBench",
     url: "https://github.com/katarinagresova/miRBench",
+    n: 8193,
     description:
-      "This is a very challenging biological dataset. It's used to study how two different types of RNA molecules, which are like instruction manuals in a cell, interact with each other. A key feature of this dataset is that these molecules are of different and sometimes changing lengths, making it difficult to analyze.",
-    goal: "The AI's goal is to predict which pairs of RNA molecules will interact successfully.",
-    successRate: [
-      { name: "Agentomics (feedback)", value: 100 },
-      { name: "Agentomics (no feedback)", value: 100 },
-      { name: "AIDE", value: 0 },
-      { name: "DI", value: 0 },
-      { name: "Zero-shot LLMs", value: 0 },
-    ],
+      "MicroRNA–target chimeric pairs identified via AGO2 CLASH technology. Each sample consists of two RNA sequences; the task is binary classification of whether they bind in the context of the AGO2 protein.",
+    goal: "Predict which miRNA–target pairs interact in the context of AGO2.",
     performance: {
-      metric: "AP Score",
+      metric: "AUPRC",
       data: [
-        { name: "Human SOTA", value: 86 },
-        { name: "Agentomics (feedback)", value: 77.8 },
-        { name: "Agentomics (no feedback)", value: 72.4 },
-        { name: "AIDE", value: null },
-        { name: "DI", value: null },
-        { name: "Zero-shot LLMs", value: null },
+        { name: "Human SoTA", value: 86.0 },
+        { name: "Agentomics (best)", value: 88.0 },
+        { name: "Agentomics (mean)", value: 83.2 },
+        { name: "Agentomics (worst)", value: 77.4 },
+        { name: "Biomni", value: null },
       ],
     },
+    successRate: [
+      { name: "Agentomics", value: 100 },
+      { name: "Biomni", value: 100 },
+      { name: "Zero-Shot LLM", value: 80 },
+    ],
   },
   {
-    name: "drosophila_enhancers_stark",
-    displayName: "Fruit Fly DNA Enhancer Classification",
+    name: "Drosophila_Enhancers_Stark",
+    displayName: "Drosophila Enhancer Classification",
     code: "DE",
-    sourceName: "Hugging Face",
-    url: "https://huggingface.co/datasets/katielink/genomic-benchmarks",
+    sourceName: "Genomic Benchmarks",
+    url: "https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks",
+    n: 6914,
     description:
-      'This dataset contains genetic sequences from fruit flies. The sequences are "enhancers," which are specific regions of DNA that act like on/off switches to control when and where certain genes are activated. The data is part of the Genomic Benchmarks collection.',
-    goal: "The AI's goal is to correctly classify which DNA sequences are enhancers and which are not.",
-    successRate: [
-      { name: "Agentomics (with feedback)", value: 100 },
-      { name: "Agentomics (without feedback)", value: 100 },
-      { name: "AIDE", value: 0 },
-      { name: "DI", value: 20 },
-      { name: "Zero-shot LLMs", value: 100 },
-    ],
+      "Drosophila enhancer sequences against random genomic controls. Enhancers are cis-regulatory elements that activate gene transcription independent of orientation and distance.",
+    goal: "Classify Drosophila DNA sequences as enhancers or non-enhancers.",
     performance: {
       metric: "Accuracy",
       data: [
-        { name: "Human SOTA", value: 58.6 },
-        { name: "Agentomics (feedback)", value: 73.6 },
-        { name: "Agentomics (no feedback)", value: 71.6 },
-        { name: "AIDE", value: null },
-        { name: "DI", value: 50 },
-        { name: "Zero-shot LLMs", value: 70.8 },
+        { name: "Human SoTA", value: 68.6 },
+        { name: "Agentomics (best)", value: 83.8 },
+        { name: "Agentomics (mean)", value: 81.9 },
+        { name: "Agentomics (worst)", value: 80.3 },
+        { name: "Biomni", value: null },
       ],
     },
+    successRate: [
+      { name: "Agentomics", value: 100 },
+      { name: "Biomni", value: 100 },
+      { name: "Zero-Shot LLM", value: 80 },
+    ],
   },
   {
-    name: "human_enhancers_cohn",
-    displayName: "Human DNA Enhancer Classification",
+    name: "Human_Enhancers_Cohn",
+    displayName: "Human Enhancer Classification (Cohn)",
     code: "HEC",
-    sourceName: "Hugging Face",
-    url: "https://huggingface.co/datasets/katielink/genomic-benchmarks",
+    sourceName: "Genomic Benchmarks",
+    url: "https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks",
+    n: 27791,
     description:
-      'This dataset contains human DNA sequences that are also enhancers—the "on/off switches" for genes. It is a part of the Genomic Benchmarks collection.',
-    goal: "The AI's goal is to correctly classify which human DNA sequences are enhancers and which are not.",
-    successRate: [
-      { name: "Agentomics (with feedback)", value: 100 },
-      { name: "Agentomics (without feedback)", value: 100 },
-      { name: "AIDE", value: 0 },
-      { name: "DI", value: 20 },
-      { name: "Zero-shot LLMs", value: 40 },
-    ],
+      "Experimental human enhancers versus size-matched random genomic regions. Enhancers were identified by transfection assays in HEK293T cells.",
+    goal: "Distinguish experimental human enhancer sequences from genomic background.",
     performance: {
       metric: "Accuracy",
       data: [
-        { name: "Human SOTA", value: 74.7 },
-        { name: "Agentomics (feedback)", value: 74.3 },
-        { name: "Agentomics (no feedback)", value: 71.6 },
-        { name: "AIDE", value: null },
-        { name: "DI", value: 72.4 },
-        { name: "Zero-shot LLMs", value: 72.8 },
+        { name: "Human SoTA", value: 74.7 },
+        { name: "Agentomics (best)", value: 75.9 },
+        { name: "Agentomics (mean)", value: 75.0 },
+        { name: "Agentomics (worst)", value: 73.8 },
+        { name: "Biomni", value: null },
       ],
     },
+    successRate: [
+      { name: "Agentomics", value: 100 },
+      { name: "Biomni", value: 100 },
+      { name: "Zero-Shot LLM", value: 80 },
+    ],
   },
   {
-    name: "human_enhancers_eijkemans",
-    displayName: "Human Gene Expression Control",
+    name: "Human_Enhancers_Ensembl",
+    displayName: "Human Enhancer Classification (Ensembl)",
     code: "HEE",
-    sourceName: "Hugging Face",
-    url: "https://huggingface.co/datasets/katielink/genomic-benchmarks",
+    sourceName: "Genomic Benchmarks",
+    url: "https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks",
+    n: 154842,
     description:
-      "This is another dataset of human enhancer sequences, which are the DNA regions that control gene expression. It is part of the Genomic Benchmarks collection.",
-    goal: "The AI's goal is to correctly classify which human DNA sequences are enhancers.",
-    successRate: [
-      { name: "Agentomics (with feedback)", value: 100 },
-      { name: "Agentomics (without feedback)", value: 100 },
-      { name: "AIDE", value: 0 },
-      { name: "DI", value: 40 },
-      { name: "Zero-shot LLMs", value: 80 },
-    ],
+      "Human enhancer elements from Ensembl regulatory build against random genomic background sequences. A large-scale benchmark for regulatory element classification.",
+    goal: "Classify human genomic sequences as Ensembl-annotated enhancers or background.",
     performance: {
       metric: "Accuracy",
       data: [
-        { name: "Human SOTA", value: 93.3 },
-        { name: "Agentomics (feedback)", value: 88.5 },
-        { name: "Agentomics (no feedback)", value: 86.4 },
-        { name: "AIDE", value: null },
-        { name: "DI", value: 75.2 },
-        { name: "Zero-shot LLMs", value: 86.4 },
+        { name: "Human SoTA", value: 93.3 },
+        { name: "Agentomics (best)", value: 91.6 },
+        { name: "Agentomics (mean)", value: 89.7 },
+        { name: "Agentomics (worst)", value: 88.0 },
+        { name: "Biomni", value: null },
       ],
     },
-  },
-  {
-    name: "human_nontata_promoters",
-    displayName: "Human Gene Promoter Detection",
-    code: "NTP",
-    sourceName: "Hugging Face",
-    url: "https://huggingface.co/datasets/katielink/genomic-benchmarks",
-    description:
-      'This dataset contains human DNA sequences for "promoters," which are the starting points for gene transcription (the process of making an RNA copy from a gene). Unlike other promoters, these lack a specific "TATA box" sequence, which makes them more difficult to identify. It is from the Genomic Benchmarks collection.',
-    goal: "The AI's goal is to correctly identify and classify these non-TATA promoter sequences.",
     successRate: [
-      { name: "Agentomics (with feedback)", value: 60 },
-      { name: "Agentomics (without feedback)", value: 60 },
-      { name: "AIDE", value: 40 },
-      { name: "DI", value: 60 },
-      { name: "Zero-shot LLMs", value: 60 },
+      { name: "Agentomics", value: 100 },
+      { name: "Biomni", value: 100 },
+      { name: "Zero-Shot LLM", value: 80 },
     ],
-    performance: {
-      metric: "Accuracy",
-      data: [
-        { name: "Human SOTA", value: 97.4 },
-        { name: "Agentomics (feedback)", value: 92.5 },
-        { name: "Agentomics (no feedback)", value: 89.7 },
-        { name: "AIDE", value: 92 },
-        { name: "DI", value: 87.4 },
-        { name: "Zero-shot LLMs", value: 90.1 },
-      ],
-    },
   },
   {
-    name: "human_ocr_ensembl",
-    displayName: "Human Chromatin Region Analysis",
+    name: "Human_OCR_Ensembl",
+    displayName: "Open Chromatin Region Classification",
     code: "OCRE",
-    sourceName: "Genomic Benchmarks Package",
-    url: "https://huggingface.co/datasets/katielink/genomic-benchmarks",
+    sourceName: "Genomic Benchmarks",
+    url: "https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks",
+    n: 174756,
     description:
-      'This dataset focuses on "open chromatin regions" (OCRs) in human DNA, which are parts of the genome that are accessible for transcription. These regions are important for gene regulation. The data is from the Genomic Benchmarks collection.',
-    goal: "The AI's goal is to correctly identify and classify these open chromatin regions.",
-    successRate: [
-      { name: "Agentomics (with feedback)", value: 100 },
-      { name: "Agentomics (without feedback)", value: 100 },
-      { name: "AIDE", value: 20 },
-      { name: "DI", value: 0 },
-      { name: "Zero-shot LLMs", value: 100 },
-    ],
+      "Open chromatin regions (OCRs) from the Ensembl regulatory build against size-matched random genomic sequences. OCRs are nucleosome-depleted regions associated with active transcription.",
+    goal: "Classify human sequences as open chromatin regions or genomic background.",
     performance: {
       metric: "Accuracy",
       data: [
-        { name: "Human SOTA", value: 82.5 },
-        { name: "Agentomics (feedback)", value: 81.6 },
-        { name: "Agentomics (no feedback)", value: 78.6 },
-        { name: "AIDE", value: 75.8 },
-        { name: "DI", value: null },
-        { name: "Zero-shot LLMs", value: 66.6 },
+        { name: "Human SoTA", value: 82.5 },
+        { name: "Agentomics (best)", value: 82.5 },
+        { name: "Agentomics (mean)", value: 79.0 },
+        { name: "Agentomics (worst)", value: 75.4 },
+        { name: "Biomni", value: null },
       ],
     },
+    successRate: [
+      { name: "Agentomics", value: 100 },
+      { name: "Biomni", value: 100 },
+      { name: "Zero-Shot LLM", value: 80 },
+    ],
   },
 ];
 
 export function PerformanceDashboard() {
   return (
-    <Card className="border-primary/20 bg-card/50 shadow-lg shadow-primary/10 supports-[backdrop-filter]:bg-card/20 backdrop-blur">
-      <CardContent className="p-6">
-        <Tabs defaultValue={datasets[0].code} className="flex flex-col gap-8">
-          <div className="relative">
-            <Carousel
-              opts={{
-                align: "start",
-              }}
-              className="w-full"
-            >
-              <TabsList className="bg-transparent p-0 h-auto justify-start relative w-full">
-                <CarouselContent className="-ml-2">
+    <div className="border border-border rounded-md overflow-hidden">
+      <Tabs defaultValue={datasets[0].code} className="flex flex-col">
+        {/* Dataset selector */}
+        <div className="border-b border-border bg-muted/30">
+          <div className="relative px-8">
+            <Carousel opts={{ align: "start" }} className="w-full">
+              <TabsList className="bg-transparent p-0 h-auto justify-start w-full">
+                <CarouselContent className="-ml-0">
                   {datasets.map((dataset) => (
                     <CarouselItem
                       key={dataset.code}
-                      className="pl-2 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                      className="pl-0 basis-full sm:basis-1/2 lg:basis-1/3"
                     >
                       <TabsTrigger
-                        key={dataset.code}
                         value={dataset.code}
-                        className="w-full justify-between rounded-md p-3 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none hover:bg-muted/50 h-full text-left"
+                        className="w-full justify-start rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none hover:bg-muted/50 text-left h-full"
                       >
-                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <Database className="h-5 w-5 flex-shrink-0" />
-                          <div className="text-left flex-1 min-w-0 overflow-hidden">
-                            <p className="font-semibold truncate text-sm">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <Database className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground" />
+                          <div className="text-left min-w-0">
+                            <p className="font-medium truncate text-xs">
                               {dataset.displayName}
                             </p>
-                            <p className="text-xs font-normal text-muted-foreground line-clamp-2">
-                              {dataset.description}
+                            <p className="text-xs font-mono font-normal text-muted-foreground">
+                              N={dataset.n.toLocaleString()} · {dataset.performance.metric}
                             </p>
                           </div>
                         </div>
-                        <ArrowRight className="h-4 w-4 flex-shrink-0 text-muted-foreground group-data-[state=active]:text-primary ml-2" />
                       </TabsTrigger>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </TabsList>
-              <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 z-10" />
-              <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 z-10" />
+              <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-6 w-6" />
+              <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-6 w-6" />
             </Carousel>
           </div>
+        </div>
 
-          <div className="flex-1">
-            {datasets.map((dataset) => {
-              const successRateData = dataset.successRate.map((item) => ({
-                name: item.name,
-                value: item.value,
-              }));
+        {/* Dataset content */}
+        <div className="flex-1">
+          {datasets.map((dataset) => (
+            <TabsContent
+              key={dataset.code}
+              value={dataset.code}
+              className="m-0"
+            >
+              <div className="p-6 space-y-8">
+                <div>
+                  <div className="flex items-baseline gap-3 mb-1">
+                    <h3 className="font-semibold">{dataset.displayName}</h3>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {dataset.name} · N={dataset.n.toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                    {dataset.description}
+                  </p>
+                  <p className="text-sm mt-2">
+                    <span className="text-muted-foreground">Task: </span>
+                    {dataset.goal}
+                  </p>
+                </div>
 
-              const performanceData = dataset.performance.data.map((d) => ({
-                name: d.name,
-                value: d.value,
-              }));
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-3">
+                      {dataset.performance.metric} Score
+                    </p>
+                    <DatasetChart
+                      data={dataset.performance.data}
+                      unit="%"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-3">
+                      Run Success Rate
+                    </p>
+                    <DatasetChart data={dataset.successRate} unit="%" />
+                  </div>
+                </div>
 
-              return (
-                <TabsContent
-                  key={dataset.code}
-                  value={dataset.code}
-                  className="m-0"
-                >
-                  <Card className="bg-card/70 border-primary/20">
-                    <CardHeader>
-                      <CardTitle>{dataset.displayName}</CardTitle>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Dataset: {dataset.name} ({dataset.code})
-                      </p>
-                      <div className="mt-2 text-sm text-foreground bg-primary/10 p-3 rounded-md">
-                        <span className="font-semibold text-primary">
-                          Goal:
-                        </span>{" "}
-                        {dataset.goal}
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-8">
-                      <p className="text-lg text-muted-foreground">
-                        {dataset.description}
-                      </p>
-
-                      <div className="space-y-4">
-                        <h4 className="font-semibold mb-2">
-                          Model Performance ({dataset.performance.metric})
-                        </h4>
-                        <div className="h-[300px]">
-                          <DatasetChart data={performanceData} unit="%" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <h4 className="font-semibold mb-2">
-                          Success Rate of Producing Workable Code
-                        </h4>
-                        <div className="h-[300px]">
-                          <DatasetChart data={successRateData} unit="%" />
-                        </div>
-                      </div>
-
-                      <Button asChild variant="link" className="p-0">
-                        <a
-                          href={dataset.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View on {dataset.sourceName} &rarr;
-                        </a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              );
-            })}
-          </div>
-        </Tabs>
-      </CardContent>
-    </Card>
+                <Button asChild variant="link" className="p-0 h-auto text-xs font-mono text-muted-foreground hover:text-foreground">
+                  <a
+                    href={dataset.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {dataset.sourceName} →
+                  </a>
+                </Button>
+              </div>
+            </TabsContent>
+          ))}
+        </div>
+      </Tabs>
+    </div>
   );
 }

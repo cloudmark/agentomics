@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { ClientBackground } from "@/components/client-background";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Outfit, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Sans, Syne } from "next/font/google";
 
-const outfit = Outfit({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-display",
+  weight: ["600", "700", "800"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -115,7 +114,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap"
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -126,7 +125,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Agentomics" />
       </head>
       <body
-        className={`${outfit.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${ibmPlexSans.variable} ${syne.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider
@@ -135,7 +134,6 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange={false}
         >
-          <ClientBackground />
           {children}
           <Toaster />
         </ThemeProvider>

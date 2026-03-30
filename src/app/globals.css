@@ -10,248 +10,129 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
-    --foreground: 0 0% 3%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 3%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 0 0% 3%;
-    --primary: 220 100% 20%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 5%;
-    --muted: 0 0% 93%;
-    --muted-foreground: 0 0% 15%;
-    --accent: 220 100% 25%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 65% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 220 100% 20%;
-    --radius: 0.5rem;
-    --chart-1: 220 100% 20%;
-    --chart-2: 220 80% 25%;
-    --chart-3: 220 60% 30%;
-    --chart-4: 220 40% 35%;
-    --chart-5: 220 20% 40%;
+    /* Warm cream light mode */
+    --background: 48 28% 96%;
+    --foreground: 30 10% 12%;
+    --card: 45 22% 98%;
+    --card-foreground: 30 10% 12%;
+    --popover: 45 22% 98%;
+    --popover-foreground: 30 10% 12%;
+    --primary: 174 44% 34%;
+    --primary-foreground: 45 22% 98%;
+    --secondary: 40 15% 91%;
+    --secondary-foreground: 30 10% 16%;
+    --muted: 42 16% 91%;
+    --muted-foreground: 30 8% 32%;
+    --accent: 174 44% 30%;
+    --accent-foreground: 45 22% 98%;
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 45 22% 98%;
+    --border: 38 14% 84%;
+    --input: 38 14% 84%;
+    --ring: 174 44% 34%;
+    --radius: 2px;
+    --chart-1: 174 44% 34%;
+    --chart-2: 195 38% 40%;
+    --chart-3: 155 35% 38%;
+    --chart-4: 215 32% 44%;
+    --chart-5: 145 30% 36%;
   }
 
   .dark {
-    --background: 262 88% 4%;
-    --foreground: 213 31% 91%;
-    --card: 220 21% 9%;
-    --card-foreground: 213 31% 91%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 213 31% 91%;
-    --primary: 262 88% 66%;
-    --primary-foreground: 213 31% 91%;
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 213 31% 91%;
-    --muted: 215 28% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 215 28% 17%;
-    --accent-foreground: 213 31% 91%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 213 31% 91%;
-    --border: 215 28% 17%;
-    --input: 215 28% 17%;
-    --ring: 262 88% 66%;
-    --radius: 0.5rem;
+    /* Warm dark charcoal — not purple, not blue-black */
+    --background: 30 6% 10%;
+    --foreground: 40 14% 87%;
+    --card: 28 6% 13%;
+    --card-foreground: 40 14% 87%;
+    --popover: 28 6% 13%;
+    --popover-foreground: 40 14% 87%;
+    --primary: 168 38% 52%;
+    --primary-foreground: 30 6% 10%;
+    --secondary: 28 6% 18%;
+    --secondary-foreground: 40 14% 87%;
+    --muted: 28 6% 18%;
+    --muted-foreground: 36 8% 65%;
+    --accent: 28 6% 18%;
+    --accent-foreground: 40 14% 87%;
+    --destructive: 0 55% 38%;
+    --destructive-foreground: 40 14% 87%;
+    --border: 28 6% 20%;
+    --input: 28 6% 20%;
+    --ring: 168 38% 52%;
+    --radius: 2px;
+    --chart-1: 168 38% 52%;
+    --chart-2: 190 34% 48%;
+    --chart-3: 148 32% 46%;
+    --chart-4: 210 30% 50%;
+    --chart-5: 155 28% 44%;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
-    font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
-  }
-  
-  /* Exception for asciinema player to use monospace fonts */
-  asciinema-player,
-  asciinema-player *,
-  .asciinema-terminal,
-  .asciinema-terminal *,
-  .ap-wrapper,
-  .ap-wrapper * {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Courier New', monospace !important;
   }
 
-  /* Asciinema player font size */
-  asciinema-player .ap-terminal,
-  asciinema-player pre,
-  .ap-terminal,
-  .ap-terminal pre {
-    font-size: 11px !important;
-    line-height: 1.4 !important;
-  }
-
-  @media (min-width: 768px) {
-    asciinema-player .ap-terminal,
-    asciinema-player pre,
-    .ap-terminal,
-    .ap-terminal pre {
-      font-size: 12px !important;
-      line-height: 1.4 !important;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    asciinema-player .ap-terminal,
-    asciinema-player pre,
-    .ap-terminal,
-    .ap-terminal pre {
-      font-size: 13px !important;
-      line-height: 1.5 !important;
-    }
-  }
-  
   body {
     @apply bg-background text-foreground;
-    font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+    font-family: var(--font-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 22px;
     transition-property: color, background-color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 200ms;
-    letter-spacing: -0.01em;
-    line-height: 1.6;
+    letter-spacing: -0.005em;
+    line-height: 1.55;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Space Grotesk", "Outfit", ui-sans-serif, system-ui, sans-serif !important;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-family: var(--font-serif), "Syne", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-weight: 700;
   }
 
-  /* Add smooth transitions for theme-sensitive elements */
-  .transition-theme {
-    transition-property: color, background-color, border-color, box-shadow;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 200ms;
-  }
-
-  /* Fullscreen styles for terminal */
-  :fullscreen {
-    height: 100vh !important;
-    width: 100vw !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: black !important;
-  }
-
-  :-webkit-full-screen {
-    height: 100vh !important;
-    width: 100vw !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: black !important;
-  }
-
-  :-moz-full-screen {
-    height: 100vh !important;
-    width: 100vw !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: black !important;
-  }
-
-  :-ms-fullscreen {
-    height: 100vh !important;
-    width: 100vw !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: black !important;
+  /* Monospace for data / code */
+  code, kbd, samp, pre, .font-mono {
+    font-family: "Fira Code", "Cascadia Code", "Roboto Mono", ui-monospace, monospace;
   }
 }
 
-@layer utilities {
-  .mix-blend-darken {
-    mix-blend-mode: darken;
-  }
-
-  /* Individual chevron moving up animations */
-  @keyframes chevron-move-1 {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-4px);
-    }
-  }
-
-  @keyframes chevron-move-2 {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-4px);
-    }
-  }
-
-  @keyframes chevron-move-3 {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-4px);
-    }
-  }
-
-  .animate-chevron-1 {
-    animation: chevron-move-1 1.5s ease-in-out infinite;
-  }
-
-  .animate-chevron-2 {
-    animation: chevron-move-2 1.5s ease-in-out infinite 0.2s;
-  }
-
-  .animate-chevron-3 {
-    animation: chevron-move-3 1.5s ease-in-out infinite 0.4s;
-  }
-}
-
-/* Blur to Focus Animation */
+/* Blur to Focus Animation — no glow */
 @keyframes blurToFocus {
   0% {
     filter: blur(20px);
-    opacity: 0.3;
-    transform: scale(0.95);
+    opacity: 0.2;
+    transform: scale(0.96);
   }
-  50% {
-    filter: blur(6px);
-    opacity: 0.75;
-    transform: scale(0.98);
+  60% {
+    filter: blur(4px);
+    opacity: 0.8;
   }
   100% {
-    filter: blur(0px);
+    filter: blur(0);
     opacity: 1;
     transform: scale(1);
   }
 }
 
 .blur-to-focus-text {
-  animation: blurToFocus 1.4s ease-out forwards;
+  animation: blurToFocus 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   display: inline-block;
-  /* Start in the initial blurred state */
   filter: blur(20px);
-  opacity: 0.3;
-  transform: scale(0.95);
+  opacity: 0.2;
+  transform: scale(0.96);
+  text-shadow: none;
 }
 
-/* Add a subtle glow effect that intensifies as it focuses */
-.blur-to-focus-text {
-  text-shadow: 
-    0 0 10px hsl(var(--primary) / 0.2),
-    0 0 20px hsl(var(--primary) / 0.1);
-  transition: text-shadow 1.4s ease-out;
-}
-
-.blur-to-focus-text:focus-within,
-.blur-to-focus-text:hover {
-  text-shadow: 
-    0 0 15px hsl(var(--primary) / 0.3),
-    0 0 30px hsl(var(--primary) / 0.2);
+/* Fullscreen styles for terminal (kept in case recordings added back) */
+:fullscreen,
+:-webkit-full-screen,
+:-moz-full-screen,
+:-ms-fullscreen {
+  height: 100vh !important;
+  width: 100vw !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: black !important;
 }
