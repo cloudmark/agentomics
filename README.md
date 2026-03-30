@@ -1,15 +1,43 @@
-# Firebase Studio
+# Agentomics — Marketing Site
 
-This is a NextJS starter in Firebase Studio.
+The public-facing website for [Agentomics](https://agentomics.com), built with Next.js 15, Tailwind CSS, and shadcn/ui. Deployed to Firebase Hosting.
 
-To get started, take a look at src/app/page.tsx.
+## Local development
 
-## Running the application
-
-To run the application, you can use the `run.sh` script:
+**Requirements:** Node.js 18+, npm
 
 ```bash
-bash run.sh
+git clone https://github.com/cloudmark/agentomics.git
+cd agentomics
+npm install
+npm run dev
 ```
 
-This will install the necessary dependencies and start the Next.js development server.
+Open [http://localhost:9002](http://localhost:9002).
+
+## Reviewing a branch
+
+```bash
+git fetch origin
+git checkout <branch-name>
+npm install
+npm run dev
+```
+
+Then open [http://localhost:9002](http://localhost:9002).
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server on port 9002 (Turbopack) |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript check |
+
+## Deployment
+
+Deployed to Firebase Hosting (project: `agentomicsml`) via GitHub Actions:
+
+- **Merge to `master`** → deploys to production at [agentomics.com](https://agentomics.com)
+- **Open a PR** → deploys a preview URL (posted automatically as a PR comment)
