@@ -2,154 +2,113 @@
 
 import {
   BrainCircuit,
-  Code,
-  Component,
-  Database,
-  FileCode,
-  FunctionSquare,
   Github,
-  Rocket,
-  Search,
-  Sparkles,
+  Lock,
+  Mail,
+  ShieldCheck,
   Zap,
 } from "lucide-react";
-
 import { Copyright } from "@/components/copyright";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { AsciinemaPlayer } from "@/components/asciinema-player";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { PerformanceDashboard } from "@/components/performance-dashboard";
+import { DatasetChart } from "@/components/dataset-chart";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { TeamSection } from "@/components/team-section";
 
-const coreComponents = [
+const features = [
   {
-    icon: <Zap className="h-8 w-8 text-primary" />,
-    title: "Autonomous Agent",
+    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+    title: "Secure by Default",
     description:
-      "Leverage an AI agent to automatically handle the entire ML pipeline, from data exploration to a fully trained model.",
+      "Every run executes inside an isolated Docker container. Code is sandboxed, dependencies are pinned, and nothing touches your host environment.",
   },
   {
     icon: <BrainCircuit className="h-8 w-8 text-primary" />,
-    title: "Dynamic Model Design",
+    title: "Biomedical Foundation Models",
     description:
-      "The agent selects the best AI algorithm for the task, designing an optimized and novel model architecture for your data.",
+      "Built-in support for ESM-2, HyenaDNA, NucleotideTransformer, RiNALMo, ChemBERTa and MolFormerXL. Any Hugging Face model can be added.",
   },
   {
-    icon: <FunctionSquare className="h-8 w-8 text-primary" />,
-    title: "Functional Models",
+    icon: <Zap className="h-8 w-8 text-primary" />,
+    title: "Validated at Every Step",
     description:
-      "Agentomics outputs fully functional, trainable models and inference scripts, ready for your data pipeline.",
+      "Each of the 7 pipeline steps is checked structurally and functionally before moving on. Steps that fail are retried automatically.",
   },
   {
-    icon: <Sparkles className="h-8 w-8 text-primary" />,
-    title: "Framework Agnostic",
+    icon: <Lock className="h-8 w-8 text-primary" />,
+    title: "Reproducible Output",
     description:
-      "The underlying LLM can choose the best framework for the job, including PyTorch, TensorFlow, JAX, and more.",
+      "Every completed run includes reusable training and inference scripts, a conda environment, and a PDF report.",
   },
 ];
 
-const howItWorksSteps = [
-  {
-    title: "Data Exploration",
-    description:
-      "Our agent analyzes your dataset, identifying its structure, features, and target outcomes to build the best possible model.",
-  },
-  {
-    title: "Dynamic Model Generation",
-    description:
-      "Next, it designs a custom-tailored model optimized for your data, generating code in PyTorch, TensorFlow, or JAX.",
-  },
-  {
-    title: "Code & Script Generation",
-    description:
-      "Finally, the agent delivers production-ready Python code, including a ready-to-use inference script for new predictions.",
-  },
+const pipelineSteps = [
+  { step: "1", title: "Data Exploration", description: "The agent reads your dataset, profiles its features, and builds an understanding of the task before writing any code." },
+  { step: "2", title: "Data Splitting", description: "A train/validation split is produced — or reused across iterations — to ensure fair, consistent evaluation throughout." },
+  { step: "3", title: "Data Representation", description: "Raw inputs are transformed into model-ready tensors or feature matrices. Representations are reassessed each iteration." },
+  { step: "4", title: "Model Architecture", description: "A new model is designed from scratch — PyTorch, sklearn, or a biomedical foundation model — with a different strategy each iteration." },
+  { step: "5", title: "Training", description: "The model is trained with the chosen architecture and hyperparameters. Failed runs are retried automatically." },
+  { step: "6", title: "Inference", description: "The trained model is evaluated on the held-out validation set and predictions are written to disk." },
+  { step: "7", title: "Prediction Exploration", description: "Results are analysed, feedback is generated, and the loop restarts — each iteration tries a better strategy until the best is found." },
+];
+
+const proteinData = [
+  { name: "Agentomics", value: 75.92 },
+  { name: "AIDE", value: 35.99 },
+  { name: "Biomni", value: 29.93 },
+  { name: "STELLA", value: 15.41 },
+  { name: "MLAgentBench", value: 13.52 },
+  { name: "Zero-Shot", value: 6.37 },
+];
+
+const drugData = [
+  { name: "Agentomics", value: 34.29 },
+  { name: "Biomni", value: 32.55 },
+  { name: "AIDE", value: 31.06 },
+  { name: "MLAgentBench", value: 22.45 },
+  { name: "STELLA", value: 12.34 },
+  { name: "Zero-Shot", value: 10.45 },
+];
+
+const genomicsData = [
+  { name: "Agentomics", value: 60.15 },
+  { name: "Biomni", value: 30.56 },
+  { name: "Zero-Shot", value: 21.53 },
 ];
 
 export default function Home() {
   return (
     <div className="flex min-h-dvh flex-col bg-transparent text-foreground">
+      {/* Header */}
       <header className="sticky top-0 z-50 w-full bg-background/95">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <a
-            href="#"
-            className="mr-6 flex items-center space-x-2 transition-opacity hover:opacity-80"
-          >
+          <a href="#" className="mr-6 flex items-center space-x-2 transition-opacity hover:opacity-80">
             <span className="font-bold text-lg tracking-tight">Agentomics</span>
           </a>
           <nav className="hidden items-center space-x-8 text-sm font-medium lg:flex">
-            <a
-              href="#how-it-works"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              How It Works
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
-            <a
-              href="#features"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              Features
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
-            <a
-              href="#get-started"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              Get Started
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
-            <a
-              href="#training-a-model"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              Training a Model
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
-            <a
-              href="#inference"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              Inference
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
-            <a
-              href="#comparison"
-              className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group"
-            >
-              Performance
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
-            </a>
+            {[
+              { href: "#how-it-works", label: "How It Works" },
+              { href: "#get-started", label: "Get Started" },
+              { href: "#case-study", label: "Case Study" },
+              { href: "#results", label: "Results" },
+              { href: "#team", label: "Team" },
+            ].map(({ href, label }) => (
+              <a key={href} href={href} className="transition-all duration-200 hover:text-primary hover:scale-105 whitespace-nowrap relative group">
+                {label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
+              </a>
+            ))}
           </nav>
           <div className="flex flex-1 items-center justify-end gap-2">
             <ThemeToggle />
             <Button asChild>
-              <a
-                href="https://github.com/BioGeMT/Agentomics-ML"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://github.com/BioGeMT/Agentomics-ML" target="_blank" rel="noopener noreferrer">
                 <Github />
                 GitHub
               </a>
@@ -159,32 +118,23 @@ export default function Home() {
       </header>
 
       <main className="z-10 flex-1">
-        <section
-          id="hero"
-          className="relative w-full overflow-hidden py-20 md:py-32 lg:py-40"
-        >
+        {/* Hero */}
+        <section id="hero" className="relative w-full overflow-hidden py-20 md:py-32 lg:py-40">
           <div className="container mx-auto flex flex-col items-center px-4 text-center">
             <div className="relative w-full flex items-center justify-center">
               <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-center">
                 <span className="blur-to-focus-text">Agentomics</span>
               </h1>
             </div>
-
-            <p className="mx-auto mt-6 max-w-[700px] text-2xl md:text-2xl text-muted-foreground">
-              The AI-powered framework that builds machine learning models for
-              you. For categorical and regression data.
+            <p className="mx-auto mt-6 max-w-[700px] text-2xl text-muted-foreground">
+              Autonomous ML experimentation for biomedical data.
             </p>
-
             <div className="mt-8 flex justify-center gap-4">
               <Button asChild size="lg" className="text-lg">
                 <a href="#get-started">Get Started</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-lg">
-                <a
-                  href="https://arxiv.org/abs/2506.05542"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://arxiv.org/abs/2506.05542" target="_blank" rel="noopener noreferrer">
                   Read the Paper
                 </a>
               </Button>
@@ -192,47 +142,29 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Value prop */}
         <section id="value-prop" className="w-full animate-fade-in-up pt-12">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                The future of model generation.
+                From data to trained model, fully automated.
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                Agentomics simplifies development by automating the entire
-                pipeline, allowing you to focus on the results, not the
-                boilerplate.
+              <p className="mt-4 text-lg text-muted-foreground">
+                Provide a dataset with a label column. Agentomics designs and trains models across
+                multiple strategies, picks the best one, and gives you working scripts and a report.
               </p>
             </div>
-          </div>
-        </section>
-
-        <section
-          id="features"
-          className="w-full animate-fade-in-up pb-12 pt-12 md:pb-24"
-        >
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {coreComponents.map((component) => (
-                <Card
-                  key={component.title}
-                  className="group relative overflow-hidden border border-primary/20 bg-card/90 text-center shadow-lg shadow-primary/10 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20 supports-[backdrop-filter]:bg-card/70 backdrop-blur-md backdrop-saturate-150"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-                  <CardHeader className="relative items-center pb-4">
-                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 transition-all duration-300 group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30">
-                      <div className="transform transition-transform duration-300 group-hover:scale-110">
-                        {component.icon}
-                      </div>
-                    </div>
-                    <CardTitle className="text-xl font-bold tracking-tight">
-                      {component.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="relative pt-0">
-                    <p className="text-base leading-relaxed text-muted-foreground">
-                      {component.description}
-                    </p>
+            <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
+              {[
+                { stat: "100%", label: "Pipeline success rate" },
+                { stat: "20", label: "Benchmark datasets" },
+                { stat: "~$9.40", label: "Per run" },
+                { stat: "#1", label: "Across all domains tested" },
+              ].map(({ stat, label }) => (
+                <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <span className="text-4xl font-extrabold text-primary">{stat}</span>
+                    <span className="mt-1 text-center text-sm text-muted-foreground">{label}</span>
                   </CardContent>
                 </Card>
               ))}
@@ -240,481 +172,212 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          id="how-it-works"
-          className="w-full animate-fade-in-up py-12 md:py-24"
-        >
+        {/* How it works */}
+        <section id="how-it-works" className="w-full animate-fade-in-up py-12 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-16 max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                How It Works
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
+                What sets it apart
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                The agent generates a production-ready model by following a ML
-                pipeline including the following steps.
+              <p className="mt-4 text-lg text-muted-foreground">
+                Agentomics is not a hyperparameter tuner. It generates code from scratch for each
+                dataset, selects among competing strategies, and runs the full experiment
+                inside a sandboxed environment.
               </p>
             </div>
-            <div className="mx-auto max-w-2xl space-y-8">
-              {howItWorksSteps.map((step, index) => (
-                <div key={step.title}>
-                  <Card className="border border-primary/20 bg-card/80 shadow-lg shadow-primary/10 transition-all hover:scale-105 hover:shadow-primary/20 supports-[backdrop-filter]:bg-card/60 backdrop-blur-md backdrop-saturate-150">
+            <div className="mx-auto max-w-5xl grid gap-6 md:grid-cols-2">
+              {features.map((f) => (
+                <Card key={f.title} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                  <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                    {f.icon}
+                    <CardTitle className="text-xl">{f.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{f.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="mx-auto mt-16 max-w-2xl">
+              <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl text-center mb-8">
+                The 7-step pipeline
+              </h3>
+              <div className="space-y-4">
+                {pipelineSteps.map((s) => (
+                  <Card key={s.step} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                     <CardHeader>
                       <div className="flex items-start gap-4">
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                          {index + 1}
+                          {s.step}
                         </div>
                         <div className="flex-1">
-                          <CardTitle>{step.title}</CardTitle>
-                          <p className="mt-2 text-lg text-muted-foreground">
-                            {step.description}
-                          </p>
+                          <CardTitle>{s.title}</CardTitle>
+                          <p className="mt-2 text-base text-muted-foreground">{s.description}</p>
                         </div>
                       </div>
                     </CardHeader>
                   </Card>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section
-          id="get-started"
-          className="w-full animate-fade-in-up py-12 md:py-24"
-        >
+        {/* Get Started */}
+        <section id="get-started" className="w-full animate-fade-in-up py-12 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-12 max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                Get Started in Seconds
+                Get Started
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                Clone the repository and run the setup script. That's all it
-                takes to start building models with Agentomics.
+              <p className="mt-4 text-lg text-muted-foreground">
+                Install via pip and run your first experiment in minutes.
+                Requires Docker and an API key for the LLM provider of your choice.
               </p>
             </div>
-            <div className="mt-12 grid gap-12 lg:grid-cols-2">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tighter sm:text-3xl">
-                    One-Command Setup
-                  </h3>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                    This terminal recording shows you how to get Agentomics
-                    running on your local machine with just two commands. It's
-                    fast, simple, and ready to go.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      1
+            <div className="mx-auto max-w-2xl space-y-8">
+              <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                <CardContent className="p-6">
+                  <pre className="overflow-x-auto rounded-md bg-muted/60 p-4 text-sm font-mono">
+                    <code className="text-primary">pip install agentomics-ml</code>
+                  </pre>
+                </CardContent>
+              </Card>
+              <div className="space-y-4">
+                {[
+                  { n: "1", title: "Set your API key", body: 'Export your LLM provider key, e.g. export OPENAI_API_KEY="sk-…"' },
+                  { n: "2", title: "Point it at your data", body: "Pass any CSV with a label column. Agentomics handles the rest." },
+                  { n: "3", title: "Collect your outputs", body: "Training script, inference script, conda environment, and a PDF report. All written to the output directory." },
+                ].map(({ n, title, body }) => (
+                  <div key={n} className="flex items-center gap-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-base">
+                      {n}
                     </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Clone the Repository:
-                      </strong>{" "}
-                      The `git clone` command downloads the project from GitHub,
-                      giving you immediate access to all the code.
+                    <p className="text-lg">
+                      <span className="font-semibold">{title} — </span>
+                      <span className="text-muted-foreground">{body}</span>
                     </p>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      2
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Run the Script:
-                      </strong>{" "}
-                      The `./run.sh` command installs all the necessary
-                      dependencies and starts the development server, making the
-                      application available in your browser right away.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full">
-                <div
-                  id="terminal-get-started"
-                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
-                  onClick={(e) => {
-                    const container = document.getElementById(
-                      "terminal-get-started"
-                    );
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <AsciinemaPlayer
-                    src="/get_started.cast"
-                    className="w-full"
-                    zoom={2.5}
-                  />
-                </div>
-                <div
-                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => {
-                    const container = document.getElementById(
-                      "terminal-get-started"
-                    );
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <svg
-                    width="48"
-                    height="12"
-                    viewBox="0 0 48 12"
-                    className="text-primary"
-                  >
-                    <path
-                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-1"
-                    />
-                    <path
-                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-2"
-                    />
-                    <path
-                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-3"
-                    />
-                  </svg>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Click to expand
-                  </span>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        <section
-          id="training-a-model"
-          className="w-full animate-fade-in-up py-12 md:py-24"
-        >
+        {/* Case Study */}
+        <section id="case-study" className="w-full animate-fade-in-up py-12 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-12 max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                See How Easy It Is to Train a Model
+                Case Study: Breast Cancer Classification
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                Watch the Agentomics agent train a breast cancer classification
-                model from scratch. We've included the dataset in the project,
-                so you can follow along and run it yourself.
+              <p className="mt-4 text-lg text-muted-foreground">
+                Watch Agentomics train a classification model on the Breast Cancer Wisconsin
+                dataset from scratch. The agent explores the data, selects a strategy, trains,
+                evaluates on a held-out test set, and writes inference-ready scripts, all
+                without any human input.
               </p>
             </div>
-            <div className="mt-12 grid gap-12 lg:grid-cols-2">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tighter sm:text-3xl">
-                    What You're Seeing
-                  </h3>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                    In this demo, the agent trains a model on the Breast Cancer
-                    Wisconsin (Diagnostic) dataset to predict if a tumor is
-                    malignant or benign.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      1
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Data Preparation:
-                      </strong>{" "}
-                      The agent automatically detects the dataset and prepares
-                      it for training, splitting it into training, testing, and
-                      inference sets.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      2
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Autonomous Training:
-                      </strong>{" "}
-                      The agent selects a model, trains it, and evaluates its
-                      performance using AUPRC, the ideal metric for this
-                      imbalanced medical dataset.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      3
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Model & Scripts Saved:
-                      </strong>{" "}
-                      Once finished, the agent saves the fully trained model
-                      (`final_model.joblib`) and the necessary inference scripts
-                      (`inference.py`), ready for immediate use.
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tighter sm:text-3xl">
-                    Strong Test Set Performance
-                  </h3>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                    The agent achieved a high AUPRC score on the held-out test
-                    set, demonstrating strong generalization. The model
-                    effectively learned to distinguish between malignant and
-                    benign tumors, showcasing Agentomics' ability to generate
-                    robust and reliable machine learning models.
-                  </p>
-                </div>
+            <div className="mx-auto max-w-4xl">
+              <div
+                id="terminal-breast-cancer"
+                className="w-full overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
+                onClick={() => {
+                  document.getElementById("terminal-breast-cancer")?.requestFullscreen?.();
+                }}
+              >
+                <AsciinemaPlayer src="/breast_cancer.cast" className="w-full" zoom={2.5} />
               </div>
-              <div className="w-full">
-                <div
-                  id="terminal-breast-cancer"
-                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
-                  onClick={(e) => {
-                    const container = document.getElementById(
-                      "terminal-breast-cancer"
-                    );
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <AsciinemaPlayer
-                    src="/breast_cancer.cast"
-                    className="w-full"
-                    zoom={2.5}
-                  />
-                </div>
-                <div
-                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => {
-                    const container = document.getElementById(
-                      "terminal-breast-cancer"
-                    );
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <svg
-                    width="48"
-                    height="12"
-                    viewBox="0 0 48 12"
-                    className="text-primary"
-                  >
-                    <path
-                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-1"
-                    />
-                    <path
-                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-2"
-                    />
-                    <path
-                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-3"
-                    />
-                  </svg>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Click to expand
-                  </span>
-                </div>
+              <div
+                className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                onClick={() => {
+                  document.getElementById("terminal-breast-cancer")?.requestFullscreen?.();
+                }}
+              >
+                <svg width="48" height="12" viewBox="0 0 48 12" className="text-primary">
+                  <path d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z" fill="currentColor" className="animate-chevron-1" />
+                  <path d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z" fill="currentColor" className="animate-chevron-2" />
+                  <path d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z" fill="currentColor" className="animate-chevron-3" />
+                </svg>
+                <span className="text-xs font-medium text-muted-foreground">Click to expand</span>
               </div>
             </div>
           </div>
         </section>
 
-        <section
-          id="inference"
-          className="w-full animate-fade-in-up py-12 md:py-24"
-        >
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                Running Inference on New Data
-              </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                The agent doesn't just produce a model—it produces a fully
-                functional inference script. Here's how you can use it to make
-                predictions on new, unseen data.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-12 lg:grid-cols-2">
-              <div className="w-full">
-                <div
-                  id="terminal-infer"
-                  className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
-                  onClick={(e) => {
-                    const container = document.getElementById("terminal-infer");
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <AsciinemaPlayer
-                    src="/infer.cast"
-                    className="w-full"
-                    zoom={2.5}
-                  />
-                </div>
-                <div
-                  className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => {
-                    const container = document.getElementById("terminal-infer");
-                    if (container) {
-                      container.requestFullscreen?.();
-                    }
-                  }}
-                >
-                  <svg
-                    width="48"
-                    height="12"
-                    viewBox="0 0 48 12"
-                    className="text-primary"
-                  >
-                    <path
-                      d="M8 4 L4 8 L5 9 L8 6 L11 9 L12 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-1"
-                    />
-                    <path
-                      d="M24 4 L20 8 L21 9 L24 6 L27 9 L28 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-2"
-                    />
-                    <path
-                      d="M40 4 L36 8 L37 9 L40 6 L43 9 L44 8 Z"
-                      fill="currentColor"
-                      className="animate-chevron-3"
-                    />
-                  </svg>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Click to expand
-                  </span>
-                </div>
-              </div>
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tighter sm:text-3xl">
-                    From Model to Prediction
-                  </h3>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                    This recording shows the final, most important step: using
-                    the trained model to make predictions. The process is simple
-                    and transparent.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      1
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Load New Data:
-                      </strong>{" "}
-                      We start with `infer.csv`, a set of data the model has
-                      never seen before. This simulates a real-world scenario
-                      where you need to classify new samples.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      2
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Run the Inference Script:
-                      </strong>{" "}
-                      The agent-generated `inference.py` script is executed,
-                      loading our saved `final_model.joblib` and applying it to
-                      the new data.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      3
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Get Probabilities:
-                      </strong>{" "}
-                      The output is a `results.csv` file containing the model's
-                      predictions as probabilities. A value near 1.0 means high
-                      confidence of malignancy, and a value near 0.0 means high
-                      confidence of being benign.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                      4
-                    </div>
-                    <p className="text-lg text-muted-foreground">
-                      <strong className="text-foreground">
-                        Compare and Verify:
-                      </strong>{" "}
-                      The final command gives you a direct, side-by-side
-                      comparison of the model's predictions and the actual
-                      diagnoses, instantly confirming its accuracy.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="comparison"
-          className="w-full animate-fade-in-up py-12 md:py-24"
-        >
+        {/* Results */}
+        <section id="results" className="w-full animate-fade-in-up py-12 md:py-24">
           <div className="container mx-auto space-y-12 px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                How Agentomics Compares
+                Benchmark Evaluation
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-2xl">
-                Agentomics consistently outperforms other AI-based methods and
-                even surpasses human-level performance on complex biological
-                datasets. The data below shows a clear advantage in both code
-                generation success and model performance.
+              <p className="mt-4 text-lg text-muted-foreground">
+                Evaluated across 20 benchmark datasets spanning three biomedical domains,
+                Agentomics ranks first in every domain. Results show mean leaderboard score
+                (higher is better).
               </p>
             </div>
-
-            <PerformanceDashboard />
-
-            <Card className="border-primary/20 bg-card/50 shadow-lg shadow-primary/10 supports-[backdrop-filter]:bg-card/20 backdrop-blur">
-              <CardHeader>
-                <CardTitle>Comparison with Traditional AutoML</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-lg text-muted-foreground">
-                  While traditional AutoML systems excel at optimizing standard
-                  models, they often fall short on the complex, domain-specific
-                  datasets found in computational biology. Agentomics is
-                  engineered to overcome these limitations. By leveraging a
-                  generative AI agent, it can design novel and intricate model
-                  architectures tailored to these unique challenges, providing a
-                  level of customization and performance that traditional AutoML
-                  struggles to match.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid gap-8 lg:grid-cols-3">
+              <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                <CardHeader>
+                  <CardTitle>Protein Engineering</CardTitle>
+                  <p className="text-sm text-muted-foreground">6 datasets</p>
+                </CardHeader>
+                <CardContent>
+                  <DatasetChart data={proteinData} />
+                </CardContent>
+              </Card>
+              <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                <CardHeader>
+                  <CardTitle>Drug Discovery</CardTitle>
+                  <p className="text-sm text-muted-foreground">9 datasets</p>
+                </CardHeader>
+                <CardContent>
+                  <DatasetChart data={drugData} />
+                </CardContent>
+              </Card>
+              <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
+                <CardHeader>
+                  <CardTitle>Regulatory Genomics</CardTitle>
+                  <p className="text-sm text-muted-foreground">5 datasets</p>
+                </CardHeader>
+                <CardContent>
+                  <DatasetChart data={genomicsData} />
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 
-        <TeamSection />
+        {/* Team */}
+        <section id="team">
+          <TeamSection />
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="w-full animate-fade-in-up py-12 md:py-24">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
+                Get in Touch
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                For collaboration inquiries, support, or to discuss using Agentomics in your
+                research, reach out to us.
+              </p>
+              <div className="mt-8">
+                <Button asChild size="lg" className="text-lg">
+                  <a href="mailto:biogemt@um.edu.mt">
+                    <Mail className="mr-2 h-5 w-5" />
+                    biogemt@um.edu.mt
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="z-10 border-t border-border/40">
