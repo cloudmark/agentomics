@@ -134,7 +134,7 @@ export default function Home() {
                 <a href="#get-started">Get Started</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-lg">
-                <a href="https://arxiv.org/abs/2506.05542" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.biorxiv.org/content/10.64898/2026.01.27.702049v1" target="_blank" rel="noopener noreferrer">
                   Read the Paper
                 </a>
               </Button>
