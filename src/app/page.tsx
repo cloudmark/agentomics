@@ -203,15 +203,15 @@ export default function Home() {
               <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl text-center mb-8">
                 The 7-step pipeline
               </h3>
-              <div className="flex items-start border-t border-primary/20 pt-6 gap-0 mt-4">
+              <div className="flex items-start border-t border-primary/20 pt-4 gap-0 mt-4">
                 {pipelineSteps.map((s, i) => (
                   <div key={s.step} className="flex items-start flex-1">
                     <div className="flex flex-col min-w-0 flex-1">
                       <span className="font-mono text-[10px] text-primary/50 mb-1">{s.step.padStart(2, "0")}</span>
-                      <span className="text-xs font-medium leading-tight pr-2 text-foreground">{s.title}</span>
+                      <span className="text-sm font-medium leading-tight pr-1 text-foreground">{s.title}</span>
                     </div>
                     {i < pipelineSteps.length - 1 && (
-                      <div className="mt-2 mx-1 w-3 h-px bg-primary/20 flex-shrink-0" />
+                      <div className="mt-2 w-2 h-px bg-primary/20 flex-shrink-0" />
                     )}
                   </div>
                 ))}
