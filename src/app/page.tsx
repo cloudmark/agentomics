@@ -203,24 +203,16 @@ export default function Home() {
               <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl text-center mb-8">
                 The 7-step pipeline
               </h3>
-              <div className="overflow-x-auto">
-                <div className="flex items-start border-t border-primary/20 pt-6 gap-0">
-                  {pipelineSteps.map((s, i) => (
-                    <div key={s.step} className="flex items-start flex-1">
-                      <div className="flex flex-col min-w-0 flex-1">
-                        <span className="font-mono text-xs text-primary/50 mb-2">{s.step.padStart(2, "0")}</span>
-                        <span className="text-2xl font-semibold leading-tight tracking-tight pr-3 text-foreground">{s.title}</span>
-                      </div>
-                      {i < pipelineSteps.length - 1 && (
-                        <div className="mt-4 mx-1 w-4 h-px bg-primary/20 flex-shrink-0" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <p className="text-2xl font-semibold tracking-tight text-muted-foreground mt-6">
-                  Runs iteratively. Each cycle tries a new strategy until the best model is found.
-                </p>
-              </div>
+              <p className="text-base text-muted-foreground mt-2">
+                {pipelineSteps.map((s, i) => (
+                  <span key={s.step}>
+                    {s.title}{i < pipelineSteps.length - 1 && <span className="mx-2 opacity-40">·</span>}
+                  </span>
+                ))}
+              </p>
+              <p className="text-2xl font-semibold tracking-tight text-muted-foreground mt-6">
+                Runs iteratively. Each cycle tries a new strategy until the best model is found.
+              </p>
             </div>
           </div>
         </section>
