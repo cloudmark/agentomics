@@ -149,7 +149,7 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
                 From data to trained model, fully automated.
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-2xl text-muted-foreground">
                 Provide a dataset with a label column. Agentomics designs and trains models across
                 multiple strategies, picks the best one, and gives you working scripts and a report.
               </p>
@@ -163,8 +163,8 @@ export default function Home() {
               ].map(({ stat, label }) => (
                 <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                   <CardContent className="flex flex-col items-center justify-center p-6">
-                    <span className="text-3xl font-extrabold text-primary text-center">{stat}</span>
-                    <span className="mt-1 text-center text-sm text-muted-foreground">{label}</span>
+                    <span className="text-4xl font-extrabold text-primary text-center">{stat}</span>
+                    <span className="mt-1 text-center text-base text-muted-foreground">{label}</span>
                   </CardContent>
                 </Card>
               ))}
@@ -179,7 +179,7 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
                 What sets it apart
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-2xl text-muted-foreground">
                 Agentomics is not a hyperparameter tuner. It generates code from scratch for each
                 dataset, selects among competing strategies, and runs the full experiment
                 inside a sandboxed environment.
@@ -232,7 +232,7 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
                 Get Started
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-2xl text-muted-foreground">
                 Install via pip and run your first experiment in minutes.
                 Requires Docker and an API key for the LLM provider of your choice.
               </p>
@@ -240,7 +240,7 @@ export default function Home() {
             <div className="mx-auto max-w-2xl space-y-8">
               <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                 <CardContent className="p-6">
-                  <pre className="overflow-x-auto rounded-md bg-muted/60 p-4 text-sm font-mono">
+                  <pre className="overflow-x-auto rounded-md bg-muted/60 p-4 text-base font-mono">
                     <code className="text-primary">pip install agentomics-ml</code>
                   </pre>
                 </CardContent>
@@ -255,7 +255,7 @@ export default function Home() {
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-base">
                       {n}
                     </div>
-                    <p className="text-lg">
+                    <p className="text-2xl">
                       <span className="font-semibold">{title}: </span>
                       <span className="text-muted-foreground">{body}</span>
                     </p>
@@ -273,7 +273,7 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
                 Case Study: Breast Cancer Classification
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-2xl text-muted-foreground">
                 Watch Agentomics train a classification model on the Breast Cancer Wisconsin
                 dataset from scratch. The agent explores the data, selects a strategy, trains,
                 evaluates on a held-out test set, and writes inference-ready scripts, all
@@ -314,7 +314,7 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
                 Benchmark Evaluation
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-2xl text-muted-foreground">
                 Agentomics ranks first in every domain tested. Results show mean leaderboard score
                 (higher is better).
               </p>
