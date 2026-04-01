@@ -36,9 +36,9 @@ const features = [
   },
   {
     icon: <Zap className="h-8 w-8 text-primary" />,
-    title: "Validated at Every Step",
+    title: "Verified Results, Not Hallucinated Ones",
     description:
-      "Each of the 7 pipeline steps is checked structurally and functionally before moving on. Steps that fail are retried automatically.",
+      "Every step must produce working code before the next begins. Agentomics always builds on validated, executable outputs — so the metrics it reports reflect models that actually ran.",
   },
   {
     icon: <Lock className="h-8 w-8 text-primary" />,
@@ -157,7 +157,7 @@ export default function Home() {
             <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
               {[
                 { stat: "100%", label: "Pipeline success rate" },
-                { stat: "20", label: "Benchmark datasets" },
+                { stat: "Peer-reviewed", label: "Published research" },
                 { stat: "~$9.40", label: "Per run" },
                 { stat: "#1", label: "Across all domains tested" },
               ].map(({ stat, label }) => (
@@ -199,26 +199,27 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mx-auto mt-16 max-w-2xl">
+            <div className="mx-auto mt-16 max-w-4xl">
               <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl text-center mb-8">
                 The 7-step pipeline
               </h3>
-              <div className="space-y-4">
-                {pipelineSteps.map((s) => (
-                  <Card key={s.step} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
-                    <CardHeader>
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
-                          {s.step}
-                        </div>
-                        <div className="flex-1">
-                          <CardTitle>{s.title}</CardTitle>
-                          <p className="mt-2 text-base text-muted-foreground">{s.description}</p>
-                        </div>
+              <div className="overflow-x-auto">
+                <div className="flex items-start min-w-[600px] border-t border-primary/20 pt-6 gap-0">
+                  {pipelineSteps.map((s, i) => (
+                    <div key={s.step} className="flex items-start flex-1">
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <span className="font-mono text-xs text-primary/50 mb-2">{s.step.padStart(2, "0")}</span>
+                        <span className="text-sm font-medium leading-tight pr-3 text-foreground">{s.title}</span>
                       </div>
-                    </CardHeader>
-                  </Card>
-                ))}
+                      {i < pipelineSteps.length - 1 && (
+                        <div className="mt-3 mx-1 w-5 h-px bg-primary/20 flex-shrink-0" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Runs iteratively — each cycle tries a new strategy until the best model is found.
+                </p>
               </div>
             </div>
           </div>
@@ -314,8 +315,7 @@ export default function Home() {
                 Benchmark Evaluation
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Evaluated across 20 benchmark datasets spanning three biomedical domains,
-                Agentomics ranks first in every domain. Results show mean leaderboard score
+                Agentomics ranks first in every domain tested. Results show mean leaderboard score
                 (higher is better).
               </p>
             </div>
