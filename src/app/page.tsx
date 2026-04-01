@@ -38,7 +38,7 @@ const features = [
     icon: <Zap className="h-8 w-8 text-primary" />,
     title: "Verified Results, Not Hallucinated Ones",
     description:
-      "Every step must produce working code before the next begins. Agentomics always builds on validated, executable outputs — so the metrics it reports reflect models that actually ran.",
+      "Every step must produce working code before the next begins. Agentomics always builds on validated, executable outputs so the metrics it reports reflect models that actually ran.",
   },
   {
     icon: <Lock className="h-8 w-8 text-primary" />,
@@ -50,12 +50,12 @@ const features = [
 
 const pipelineSteps = [
   { step: "1", title: "Data Exploration", description: "The agent reads your dataset, profiles its features, and builds an understanding of the task before writing any code." },
-  { step: "2", title: "Data Splitting", description: "A train/validation split is produced — or reused across iterations — to ensure fair, consistent evaluation throughout." },
+  { step: "2", title: "Data Splitting", description: "A train/validation split is produced, reused across iterations — to ensure fair, consistent evaluation throughout." },
   { step: "3", title: "Data Representation", description: "Raw inputs are transformed into model-ready tensors or feature matrices. Representations are reassessed each iteration." },
-  { step: "4", title: "Model Architecture", description: "A new model is designed from scratch — PyTorch, sklearn, or a biomedical foundation model — with a different strategy each iteration." },
+  { step: "4", title: "Model Architecture", description: "A new model is designed from scratch, PyTorch, sklearn, or a biomedical foundation model with a different strategy each iteration." },
   { step: "5", title: "Training", description: "The model is trained with the chosen architecture and hyperparameters. Failed runs are retried automatically." },
   { step: "6", title: "Inference", description: "The trained model is evaluated on the held-out validation set and predictions are written to disk." },
-  { step: "7", title: "Prediction Exploration", description: "Results are analysed, feedback is generated, and the loop restarts — each iteration tries a better strategy until the best is found." },
+  { step: "7", title: "Prediction Exploration", description: "Results are analysed, feedback is generated, and the loop restarts and each iteration tries a better strategy until the best is found." },
 ];
 
 const proteinData = [
@@ -163,7 +163,7 @@ export default function Home() {
               ].map(({ stat, label }) => (
                 <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                   <CardContent className="flex flex-col items-center justify-center p-6">
-                    <span className="text-4xl font-extrabold text-primary">{stat}</span>
+                    <span className="text-3xl font-extrabold text-primary text-center">{stat}</span>
                     <span className="mt-1 text-center text-sm text-muted-foreground">{label}</span>
                   </CardContent>
                 </Card>
@@ -209,7 +209,7 @@ export default function Home() {
                     <div key={s.step} className="flex items-start flex-1">
                       <div className="flex flex-col min-w-0 flex-1">
                         <span className="font-mono text-xs text-primary/50 mb-2">{s.step.padStart(2, "0")}</span>
-                        <span className="text-sm font-medium leading-tight pr-3 text-foreground">{s.title}</span>
+                        <span className="text-base font-semibold leading-tight pr-3 text-foreground">{s.title}</span>
                       </div>
                       {i < pipelineSteps.length - 1 && (
                         <div className="mt-3 mx-1 w-5 h-px bg-primary/20 flex-shrink-0" />
@@ -218,7 +218,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground mt-4">
-                  Runs iteratively — each cycle tries a new strategy until the best model is found.
+                  Runs iteratively. Each cycle tries a new strategy until the best model is found.
                 </p>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function Home() {
                       {n}
                     </div>
                     <p className="text-lg">
-                      <span className="font-semibold">{title} — </span>
+                      <span className="font-semibold">{title}: </span>
                       <span className="text-muted-foreground">{body}</span>
                     </p>
                   </div>
