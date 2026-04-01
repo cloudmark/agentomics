@@ -208,7 +208,7 @@ export default function Home() {
                   <div key={s.step} className="flex items-start flex-1">
                     <div className="flex flex-col min-w-0 flex-1">
                       <span className="font-mono text-[10px] text-primary/50 mb-1">{s.step.padStart(2, "0")}</span>
-                      <span className="text-sm font-medium leading-tight pr-1 text-foreground">{s.title}</span>
+                      <span className="text-xl font-medium leading-tight pr-1 text-foreground">{s.title}</span>
                     </div>
                     {i < pipelineSteps.length - 1 && (
                       <div className="mt-2 w-2 h-px bg-primary/20 flex-shrink-0" />
@@ -253,7 +253,7 @@ export default function Home() {
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-base">
                       {n}
                     </div>
-                    <p className="text-2xl">
+                    <p className="text-xl">
                       <span className="font-semibold">{title}: </span>
                       <span className="text-muted-foreground">{body}</span>
                     </p>
