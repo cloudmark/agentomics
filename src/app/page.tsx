@@ -158,14 +158,14 @@ export default function Home() {
               {[
                 { stat: "100%", label: "of outputs are working models" },
                 { stat: "Published", label: "at ISMB 2026" },
-                { stat: "~$1.20", label: "Per hour", sublabel: "Codex, 5.1 max model", statColor: "text-blue-500" },
+                { stat: "~$1.20", label: "Per hour", sublabel: "Codex, 5.1 max model" },
                 { stat: "#1 ML Agent", label: "Across all tested domains" },
-              ].map(({ stat, label, sublabel, statColor }) => (
+              ].map(({ stat, label, sublabel }) => (
                 <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                   <CardContent className="flex flex-col items-center justify-center p-6">
-                    <span className={`text-4xl font-extrabold text-center ${statColor ?? "text-primary"}`}>{stat}</span>
+                    <span className="text-4xl font-extrabold text-primary text-center">{stat}</span>
                     <span className="mt-1 text-center text-base text-muted-foreground">{label}</span>
-                    {sublabel && <span className="mt-1 text-center text-xs text-muted-foreground/60">{sublabel}</span>}
+                    {sublabel && <span className="mt-1 text-center text-base text-muted-foreground">{sublabel}</span>}
                   </CardContent>
                 </Card>
               ))}
