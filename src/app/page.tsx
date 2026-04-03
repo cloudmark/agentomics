@@ -156,10 +156,10 @@ export default function Home() {
             </div>
             <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
               {[
-                { stat: "100%", label: "Pipeline success rate" },
-                { stat: "Peer-reviewed", label: "Published research" },
-                { stat: "~$9.40", label: "Per run" },
-                { stat: "#1", label: "Across all domains tested" },
+                { stat: "100%", label: "of outputs are working models" },
+                { stat: "Published", label: "at ISMB 2026" },
+                { stat: "~$1.20", label: "Per hour" },
+                { stat: "#1 ML Agent", label: "Across all tested domains" },
               ].map(({ stat, label }) => (
                 <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                   <CardContent className="flex flex-col items-center justify-center p-6">
