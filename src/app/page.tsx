@@ -158,7 +158,7 @@ export default function Home() {
               {[
                 { stat: "100%", label: "of outputs are working models" },
                 { stat: "Published", label: "at ISMB 2026" },
-                { stat: "~$1.20", label: "Per hour", sublabel: "Codex, 5.1 max model" },
+                { stat: "~$1.20 / hr", label: "Codex, 5.1 max model" },
                 { stat: "#1 ML Agent", label: "Across all tested domains", statClass: "text-3xl" },
               ].map(({ stat, label, sublabel, statClass }) => (
                 <Card key={label} className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
