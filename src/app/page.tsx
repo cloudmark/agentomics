@@ -150,9 +150,8 @@ export default function Home() {
                 From data to trained model, fully automated.
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
-                Provide a dataset with a label column. Agentomics designs and trains models in real
-                time across multiple strategies, picks the best one, and gives you working scripts
-                and a report.
+                Provide a dataset with a label column. Agentomics designs and trains models across
+                multiple strategies, picks the best one, and gives you working scripts and a report.
               </p>
             </div>
             <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
