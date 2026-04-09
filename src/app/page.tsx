@@ -231,23 +231,24 @@ export default function Home() {
                 Get Started
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
-                Install via pip and run your first experiment in minutes.
-                Requires Docker and an API key for the LLM provider of your choice.
+                Clone the repo and run your first experiment locally. Requires Docker and an API
+                key for the LLM provider of your choice.
               </p>
             </div>
             <div className="mx-auto max-w-2xl space-y-8">
               <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                 <CardContent className="p-6">
                   <pre className="overflow-x-auto rounded-md bg-muted/60 p-4 text-base font-mono">
-                    <code className="text-primary">pip install agentomics-ml</code>
+                    <code className="text-primary">git clone https://github.com/Cloudmark/agentomics-ml.git &amp;&amp; cd agentomics-ml</code>
                   </pre>
                 </CardContent>
               </Card>
               <div className="space-y-4">
                 {[
-                  { n: "1", title: "Set your API key", body: 'Export your LLM provider key, e.g. export OPENAI_API_KEY="sk-…"' },
-                  { n: "2", title: "Point it at your data", body: "Pass any CSV with a label column. Agentomics handles the rest." },
-                  { n: "3", title: "Collect your outputs", body: "Training script, inference script, conda environment, and a PDF report. All written to the output directory." },
+                  { n: "1", title: "Configure your provider", body: 'Copy .env.example to .env and set your LLM provider key, for example OPENROUTER_API_KEY="..." or OPENAI_API_KEY="...".' },
+                  { n: "2", title: "Add your dataset", body: "Place your dataset in the datasets/ directory so Agentomics can train and evaluate on it." },
+                  { n: "3", title: "Run Agentomics", body: "Launch ./run.sh, choose your dataset and model, and let Agentomics train and evaluate automatically." },
+                  { n: "4", title: "Collect your outputs", body: "Agentomics writes the best run files, reports, extras, and inference-ready artifacts to the output directory." },
                 ].map(({ n, title, body }) => (
                   <div key={n} className="flex items-center gap-4">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-base">
