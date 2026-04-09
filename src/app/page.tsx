@@ -178,12 +178,11 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-12 max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                What sets it apart
+                Core Design
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
-                Agentomics is not a hyperparameter tuner. It generates code from scratch for each
-                dataset, selects among competing strategies, and runs the full experiment
-                inside a sandboxed environment.
+                Agentomics generates code from scratch for each dataset, selects among competing
+                strategies, and runs the full experiment inside a sandboxed environment.
               </p>
             </div>
             <div className="mx-auto max-w-5xl grid gap-6 md:grid-cols-2">
@@ -274,7 +273,7 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
                 Watch Agentomics train a DNA sequence classifier on the
-                human_enhancers_ensembl dataset from scratch. The agent explores the
+                human enhancers dataset from scratch. The agent explores the
                 dataset, selects a strategy, trains, evaluates on a held-out test set,
                 and writes reproducible outputs without human intervention.
               </p>
