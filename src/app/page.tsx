@@ -239,7 +239,7 @@ export default function Home() {
               <Card className="group relative overflow-hidden border border-primary/20 bg-card/90 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/50 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-xl hover:shadow-primary/20">
                 <CardContent className="p-6">
                   <pre className="overflow-x-auto rounded-md bg-muted/60 p-4 text-base font-mono">
-                    <code className="text-primary">git clone https://github.com/Cloudmark/agentomics-ml.git &amp;&amp; cd agentomics-ml</code>
+                    <code className="text-primary">git clone https://github.com/biogemt/agentomics-ml.git &amp;&amp; cd agentomics-ml</code>
                   </pre>
                 </CardContent>
               </Card>
