@@ -270,29 +270,29 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-12 max-w-3xl text-center">
               <h2 className="mt-4 text-3xl font-bold tracking-tighter sm:text-4xl">
-                Case Study: Breast Cancer Classification
+                Case Study: Human Enhancer Classification
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
-                Watch Agentomics train a classification model on the Breast Cancer Wisconsin
-                dataset from scratch. The agent explores the data, selects a strategy, trains,
-                evaluates on a held-out test set, and writes inference-ready scripts, all
-                without any human input.
+                Watch Agentomics train a DNA sequence classifier on the
+                human_enhancers_ensembl benchmark from scratch. The agent explores the
+                dataset, selects a strategy, trains, evaluates on a held-out test set,
+                and writes reproducible outputs without human intervention.
               </p>
             </div>
             <div className="mx-auto max-w-4xl">
               <div
-                id="terminal-breast-cancer"
+                id="terminal-human-enhancers"
                 className="w-full overflow-hidden rounded-lg border border-primary/20 bg-card/50 shadow-lg shadow-primary/10 backdrop-blur supports-[backdrop-filter]:bg-card/20 cursor-pointer"
                 onClick={() => {
-                  document.getElementById("terminal-breast-cancer")?.requestFullscreen?.();
+                  document.getElementById("terminal-human-enhancers")?.requestFullscreen?.();
                 }}
               >
-                <AsciinemaPlayer src="/breast_cancer.cast" className="w-full" zoom={2.5} />
+                <AsciinemaPlayer src="/human_enhancers_ensembl.cast" className="w-full" zoom={2.5} />
               </div>
               <div
                 className="mt-4 flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
                 onClick={() => {
-                  document.getElementById("terminal-breast-cancer")?.requestFullscreen?.();
+                  document.getElementById("terminal-human-enhancers")?.requestFullscreen?.();
                 }}
               >
                 <svg width="48" height="12" viewBox="0 0 48 12" className="text-primary">
