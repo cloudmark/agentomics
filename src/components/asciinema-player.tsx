@@ -146,7 +146,6 @@ export function AsciinemaPlayer({
           autoplay: true,
           speed: 1.5,
           fontSize: zoom !== 1 ? zoomedFontSize : baseFontSize,
-          idleTimeLimit: 5,
         });
         playerRef.current = player;
       }

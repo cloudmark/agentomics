@@ -150,8 +150,9 @@ export default function Home() {
                 From data to trained model, fully automated.
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
-                Provide a dataset with a label column. Agentomics designs and trains models across
-                multiple strategies, picks the best one, and gives you working scripts and a report.
+                Provide a dataset with a label column. Agentomics designs and trains models in real
+                time across multiple strategies, picks the best one, and gives you working scripts
+                and a report.
               </p>
             </div>
             <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
@@ -274,7 +275,7 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-2xl text-muted-foreground">
                 Watch Agentomics train a DNA sequence classifier on the
-                human_enhancers_ensembl benchmark from scratch. The agent explores the
+                human_enhancers_ensembl dataset from scratch. The agent explores the
                 dataset, selects a strategy, trains, evaluates on a held-out test set,
                 and writes reproducible outputs without human intervention.
               </p>
