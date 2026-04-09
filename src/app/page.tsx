@@ -26,7 +26,7 @@ const features = [
     icon: <ShieldCheck className="h-8 w-8 text-primary" />,
     title: "Secure by Default",
     description:
-      "Every run executes inside an isolated Docker container. Code is sandboxed, dependencies are pinned, and nothing touches your host environment.",
+      "Every run executes inside an isolated Docker container. Code is sandboxed, dependencies are installed on demand inside the container, and nothing touches your host environment.",
   },
   {
     icon: <BrainCircuit className="h-8 w-8 text-primary" />,
@@ -275,7 +275,8 @@ export default function Home() {
               <p className="mt-4 text-2xl text-muted-foreground">
                 Watch Agentomics train a DNA sequence classifier on the
                 human enhancers dataset from scratch. The agent explores the
-                dataset, selects a strategy, trains, evaluates on a held-out test set,
+                dataset, selects a strategy, trains candidate models, scores
+                them on a held-out validation split,
                 and writes reproducible outputs without human intervention.
               </p>
             </div>
