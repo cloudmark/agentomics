@@ -36,7 +36,7 @@ const features = [
   },
   {
     icon: <Zap className="h-8 w-8 text-primary" />,
-    title: "Verified Results, Not Hallucinated Ones",
+    title: "Verified Results",
     description:
       "Every step must produce working code before the next begins. Agentomics always builds on validated, executable outputs so the metrics it reports reflect models that actually ran.",
   },
@@ -44,7 +44,7 @@ const features = [
     icon: <Lock className="h-8 w-8 text-primary" />,
     title: "Reproducible Output",
     description:
-      "Every completed run includes reusable training and inference scripts, a conda environment, and a PDF report.",
+      "Every completed run includes reusable training and inference scripts, model artifacts, a conda environment, and a PDF report.",
   },
 ];
 
